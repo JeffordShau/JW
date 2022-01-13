@@ -38,9 +38,24 @@ public class Woo
 // implement hero classes
     System.out.print(s);
 
-    try 
+    try
+    {
+      name = in.readLine();
+    }
+    catch ( IO Exception e ) { }
+
+    mc = new Protagonist( name );
+  }
+
+  public void endGame 
+  {
+    if (// mc health = 0)
+    {
+
+    }
 
 
+  }
 
 
   }
