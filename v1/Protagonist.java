@@ -13,7 +13,7 @@ public class Protagonist extends Character {
   }
 
   public void addGems(int randGems) {
-    gems += randGems; 
+    gems += randGems;
   }
 
   public void getHeal() {
@@ -26,5 +26,9 @@ public class Protagonist extends Character {
 
   public String getName () {
     return name;
+  }
+
+  public boolean isAlive() {
+    return health > 0; 
   }
 }

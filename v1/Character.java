@@ -23,3 +23,4 @@ public class Character {
     defense = 0;
     gems = 0;
   }
+}

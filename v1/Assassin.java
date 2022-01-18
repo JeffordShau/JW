@@ -1,6 +1,6 @@
 public class Assassin extends Protagonist {
 
-  public Asssasin(String name) {
+  public Assassin(String name) {
     super(name);
   }
 

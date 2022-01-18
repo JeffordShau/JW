@@ -84,7 +84,7 @@ public class Woo {
         if (stageSel < 2) {
           int randGems = (int) (Math.random() * 3); //adjust number of gems received
           System.out.println("You looked around and found " + randGems + "gems! You do not spot any monsters and continue on your journey. ");
-          pat.getGems(randGems);
+          pat.addGems(randGems);
         }
         // fights a monster
         else if (stageSel < 8) {
