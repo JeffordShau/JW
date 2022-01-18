@@ -74,5 +74,12 @@ William Vongphanith :: Added to proposal
 
 2022-01-16
 --------------------------------------------------------------
-Jefford Shau :: Edited the proposal
+Jefford Shau :: Edited and finalized the proposal
+==============================================================
+
+
+2022-01-18
+--------------------------------------------------------------
+Jefford Shau :: Added character files
+William Vongphanith :: Added item files
 ==============================================================

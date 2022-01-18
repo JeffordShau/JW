@@ -5,10 +5,10 @@ public class Monster extends Character {
 
   public Monster() {
     super();
-    health = 10;
-    baseDamage = 3;
+    health = 300;
+    baseDamage = 30;
     damageMult = 1;
-    defense = 0;
+    defense = 10;
   }
 
   public String getRole () {
