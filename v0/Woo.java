@@ -80,7 +80,7 @@ public class Woo {
         // receives a few gems, nothing happens
         if (stageSel < 2) {
           int randGems = (int) (Math.random() * 3); //adjust number of gems received
-          System.out.println("You looked around and found " + randGems + "gems!You do not spot any monsters and continue on your journey. ");
+          System.out.println("You looked around and found " + randGems + "gems! You do not spot any monsters and continue on your journey. ");
           pat.getGems(randGems);
         }
         // fights a monster
@@ -93,12 +93,12 @@ public class Woo {
         }
       }
       // shop
-      else if (stages & 7 = 0) {
+      else if (stages % 7 == 0) {
         System.out.println("As you walk forward, you see a merchant ahead of you.");
         shop();
       }
       // final boss
-      else if (stages == 0) {
+      else if (stages == maxStages) {
         // fight final boss
       }
       // adds 1 to stage
