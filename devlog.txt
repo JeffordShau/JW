@@ -80,6 +80,6 @@ Jefford Shau :: Edited and finalized the proposal
 
 2022-01-18
 --------------------------------------------------------------
-Jefford Shau :: Added character files
+Jefford Shau :: Added character files, Woo.java compilable
 William Vongphanith :: Added item files
 ==============================================================
