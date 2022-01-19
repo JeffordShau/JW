@@ -5,13 +5,21 @@ public class Monster extends Character {
 
   public Monster() {
     super();
-    health = 300;
-    baseDamage = 30;
+    health = 4;
+    baseDamage = 3;
     damageMult = 1;
-    defense = 10;
+    defense = 0;
   }
 
   public String getRole () {
     return "Monster";
+  }
+
+  public boolean isAlive() {
+    return health > 0;
+  }
+
+  public int getDefense() {
+    return defense;
   }
 }

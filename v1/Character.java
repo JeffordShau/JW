@@ -23,4 +23,39 @@ public class Character {
     defense = 0;
     gems = 0;
   }
+
+  public String getName() {
+    return name;
+  }
+
+  public int getHealth() {
+    return health;
+  }
+
+  public int getDefense() {
+    return defense;
+  }
+
+  public boolean isAlive() {
+    return health > 0;
+  }
+
+  public int attack (Character attacked) {
+    int totalDamage = 0;
+    if (damageMult != 1) {
+      totalDamage = baseDamage * damageMult - attacked.getDefense();
+      return attacked.reduceHealth(totalDamage);
+    }
+    totalDamage = baseDamage - attacked.getDefense();
+    return attacked.reduceHealth(totalDamage);
+  }
+
+  public int reduceHealth(int damage) {
+    health -= damage;
+    return damage;
+  }
+
+
+
+
 }

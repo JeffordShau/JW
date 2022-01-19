@@ -9,22 +9,17 @@ import java.io.*;
 import java.util.*;
 
 public class Woo {
-
-// Instance variables
+  private final static int maxStages = 30; // set the max number of stages
+  private static int stages = 1; 
+  // Instance variables
   private Protagonist pat;
   private Monster smaug;
-
-  private boolean shop;
-  private int stages;
-  private int maxStages;
 
   private InputStreamReader isr;
   private BufferedReader in;
 
   // default constructor
   public Woo() {
-    stages = 1;
-    maxStages = 30; // set the max number of stages
     isr = new InputStreamReader( System.in );
     in = new BufferedReader( isr );
     newGame();
@@ -122,23 +117,24 @@ public class Woo {
 
   public void battleMonster() {
     int i = 1;
-
-    //initiates the monster
-    int monsterChoice = (int) (Math.random() * 2);
     String aboutDescrip = "";
-    if (monsterChoice == 0) {
-      smaug = new GoblinKing();
-      aboutDescrip = GoblinKing.about();
+
+    if (stages < 10) {
+      int monsterChoice = (int) (Math.random() * 2);
+      if (monsterChoice == 0) {
+        smaug = new Rat();
+        aboutDescrip = Rat.about();
+      }
+      else if (monsterChoice == 1) {
+        smaug = new Blob();
+        aboutDescrip = Blob.about();
+      }
+      else if (monsterChoice == 2) {
+        smaug = new Crow();
+        aboutDescrip = Crow.about();
+      }
     }
-    else if (monsterChoice == 1) {
-      smaug = new Dragon();
-      aboutDescrip = Dragon.about();
-    }
-    else if (monsterChoice == 2) {
-      smaug = new Golem();
-      aboutDescrip = Golem.about();
-    }
-    System.out.println( "\nYou are " + pat.getName() + ", the " + pat.getRole() + ". " + "You are fighting a " + smaug.getRole() + ", " + aboutDescrip );
+    System.out.println( "You are fighting a " + smaug.getRole() + ", " + aboutDescrip);
 
     // fighting with turns
     while( smaug.isAlive() && pat.isAlive() ) {
@@ -155,8 +151,8 @@ public class Woo {
         }
         else if ( i == 3 ) {
           System.out.println("You begin to escape. The monster slashes at you before you escape.");
-          d2 = smaug.attack( pat );
-          System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + d2 + " points of damage.");
+          int fleeDmg = smaug.attack( pat );
+          System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + fleeDmg + " points of damage.");
           System.out.println("\nYe health: " + pat.getHealth());
         }
       }
@@ -181,8 +177,6 @@ public class Woo {
   // shop interface
   public void shop() {
     String s;
-    String[] totalItems = {"Rusty Dagger", "Straw Shield", "Stone Shield"};
-    int in = totalItems.length();
     int shopChoice = 0;
     s = "Hero welcome to the shop! Would you ilke to: ";
     s += "\t1: Buy\n";
@@ -200,7 +194,7 @@ public class Woo {
       sellInterface();
     }
     else if (shopChoice == 3) {
-      break;
+      return;
     }
   }
 
@@ -230,7 +224,7 @@ public class Woo {
       // add item to inventory and subtract gems
     }
     else if (buyChoice == 4) {
-      break;
+      return;
     }
     else if (buyChoice == 5) {
       shop();
@@ -263,7 +257,7 @@ public class Woo {
       // add item to inventory and subtract gems
     }
     else if (sellChoice == 4) {
-      break;
+      return;
     }
     else if (sellChoice == 5) {
       shop();
@@ -272,8 +266,10 @@ public class Woo {
 
   public static void main( String[] args ) {
     Woo game = new Woo();
-    while( pat.isAlive() ) {
-      game.Turn();
+    while( stages < maxStages ) {
+      if ( !game.Turn() ) {
+        break;
+      }
       stages += 1;
     }
       System.out.println( "Thy game doth be over." );

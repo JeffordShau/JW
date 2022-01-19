@@ -8,7 +8,7 @@ public class Protagonist extends Character {
     super(name);
   }
 
-  public void getGems() {
+  public int getGems() {
     return gems;
   }
 
@@ -29,6 +29,6 @@ public class Protagonist extends Character {
   }
 
   public boolean isAlive() {
-    return health > 0; 
+    return health > 0;
   }
 }
