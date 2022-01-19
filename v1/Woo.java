@@ -9,8 +9,8 @@ import java.io.*;
 import java.util.*;
 
 public class Woo {
-  private final static int maxStages = 30; // set the max number of stages
-  private static int stages = 1; 
+  private final static int maxDays = 30; // set the max number of days
+  private static int days = 1;
   // Instance variables
   private Protagonist pat;
   private Monster smaug;
@@ -30,15 +30,13 @@ public class Woo {
     String s;
     String name = "";
     int playerChoice = 0;
-
-    // implement hero classes
     s = "The Hero has arrived!";
     s += "\nChoose your hero: \n";
-    s += "\t1: Easy: Rogue: " + Rogue.about() + "\n";
-    s += "\t2: Normal: Warrior: " + Warrior.about() + "\n";
-    s += "\t3: Assassin: " + Assassin.about() + "\n";
-    s += "\t4: Thief: " + Thief.about() + "\n";
-    s += "\t5: Cursed_Hero: " + Cursed_Hero.about() + "\n";
+    s += "\t1: Easy: \n\tRogue: " + Rogue.about() + "\n";
+    s += "\t2: Normal: \n\tWarrior: " + Warrior.about() + "\n";
+    s += "\t3: Hard: \n\tAssassin: " + Assassin.about() + "\n";
+    s += "\t4: Very Hard: \n\tThief: " + Thief.about() + "\n";
+    s += "\t5: Impossible: \n\tCursed Hero: " + Cursed_Hero.about() + "\n";
     s += "Selection: ";
     System.out.print( s );
     try {
@@ -51,7 +49,6 @@ public class Woo {
 	    name = in.readLine();
     }
     catch ( IOException e ) { }
-    // initiates the player's character
     if (playerChoice == 1) {
       pat = new Rogue(name);
     } else if (playerChoice == 2) {
@@ -71,15 +68,32 @@ public class Woo {
   // one turn/stage
   public boolean Turn() {
     if (pat.isAlive()) {
-      System.out.println("Stage: " + stages);
-      // randomly assigns the stage depending on stage number
-      if (stages % 7 != 0 || stages != maxStages) {
+      if (pat.getRole() == "Rogue") {
+        if (pat.getHealth() < 20) {
+        System.out.println("Your Bracelet of Life healed you for 1 hp!");
+          pat.addHealth(1);
+        }
+      }
+      System.out.println("Day " + days + "\tHealth: " + pat.getHealth() + "\tAttack: " + pat.getAttack() + "\tDefense: " + pat.getDefense() + "\tGems: " + pat.getGems());
+      int randGems = 0;
+      // randomly assigns the stage depending on day number
+      if (days % 7 != 0 && days != maxDays) {
         int stageSel = (int) (Math.random() * 10);
         // receives a few gems, nothing happens
         if (stageSel < 2) {
-          int randGems = (int) (Math.random() * 3); //adjust number of gems received
-          System.out.println("You looked around and found " + randGems + "gems! You do not spot any monsters and continue on your journey. ");
+          if (days < 10) {
+            randGems = (int) (Math.random() * 10);
+          }
+          else if (days < 20) {
+            randGems = (int) (days / 4) * (int) (Math.random() * 10);
+          }
+          else if (days < 30) {
+            randGems = (int) (days / 4) * (int) (Math.random() * 10);
+          }
+          System.out.println("You looked around and found " + randGems + " gems!");
           pat.addGems(randGems);
+          pat.getGems();
+          System.out.println("You do not spot any monsters today. You set up camp and sleep away the night.");
         }
         // fights a monster
         else if (stageSel < 8) {
@@ -91,23 +105,15 @@ public class Woo {
         }
       }
       // shop
-      else if (stages % 7 == 0) {
+      else if (days % 7 == 0) {
         System.out.println("As you walk forward, you see a merchant ahead of you.");
         shop();
       }
       // final boss
-      else if (stages == maxStages) {
+      else if (days == maxDays) {
         // fight final boss
       }
-      // adds 1 to stage
-      if (pat.isAlive()) {
-        stages += 1;
-        return true;
-      }
-      // player dead
-      else {
-        return false;
-      }
+      return true;
     }
     // player dead
     else {
@@ -119,7 +125,7 @@ public class Woo {
     int i = 1;
     String aboutDescrip = "";
 
-    if (stages < 10) {
+    if (days < 10) {
       int monsterChoice = (int) (Math.random() * 2);
       if (monsterChoice == 0) {
         smaug = new Rat();
@@ -138,50 +144,54 @@ public class Woo {
 
     // fighting with turns
     while( smaug.isAlive() && pat.isAlive() ) {
-      try {
       System.out.println( "\nWhat is your choice?" );
-      System.out.println( "\t1: Attack.\n\t2: Use item.\n\t3:Flee." );
-      i = Integer.parseInt( in.readLine() );
+      System.out.println( "\t1: Attack.\n\t2: Use item.\n\t3: Flee." );
+      try {
+        i = Integer.parseInt( in.readLine() );
       }
       catch ( IOException e ) { }
-      if ( i == 1 )
-        attack();
-        else if ( i == 2 ) {
-          // use item
+      if ( i == 1 ) {
+        int order = (int) (Math.random() * 2);
+        if (order == 0) {
+          int first, second;
+          first = pat.attack( smaug );
+          System.out.println( "\n" + pat.getName() + " dealt " + first + " damage.");
+          System.out.println("\nMonster health: " + smaug.getHealth());
+          second = smaug.attack( pat );
+          System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + second + " points of damage.");
+          System.out.println("\nYe health: " + pat.getHealth());
         }
-        else if ( i == 3 ) {
-          System.out.println("You begin to escape. The monster slashes at you before you escape.");
+        else if (order == 1) {
+          int first, second;
+          second = smaug.attack( pat );
+          System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + second + " points of damage.");
+          System.out.println("\nYe health: " + pat.getHealth());
+          first = pat.attack( smaug );
+          System.out.println( "\n" + pat.getName() + " dealt " + first + " points of damage.");
+          System.out.println("\nMonster health: " + smaug.getHealth());
+        }
+      }
+      else if ( i == 2 ) {
+        // use item
+      }
+      else if ( i == 3 ) {
+          System.out.println("You begin to escape, but the monster slashes at you one time before you escape.");
           int fleeDmg = smaug.attack( pat );
           System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + fleeDmg + " points of damage.");
           System.out.println("\nYe health: " + pat.getHealth());
+          return;
         }
       }
-    }
-
-  public void attack() {
-      int d1, d2;
-      d1 = pat.attack( smaug );
-      System.out.println( "\n" + pat.getName() + " dealt " + d1 + " points of damage.");
-      System.out.println("\nMonster health: " + smaug.getHealth());
-      // healing Role if implemented
-      // if (pat.getRole() == "Priest") {
-      //   pat.getHeal();
-      //   System.out.println("\nYe health for 5!");
-      //   System.out.println("\nYe health: " + pat.getHealth());
-      // }
-      d2 = smaug.attack( pat );
-      System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + d2 + " points of damage.");
-      System.out.println("\nYe health: " + pat.getHealth());
     }
 
   // shop interface
   public void shop() {
     String s;
     int shopChoice = 0;
-    s = "Hero welcome to the shop! Would you ilke to: ";
+    s = "Hero welcome to the shop! Would you ilke to: \n";
     s += "\t1: Buy\n";
     s += "\t2: Sell\n";
-    s += "\t3: Exit Shop";
+    s += "\t3: Exit Shop\n";
     System.out.print(s);
     try {
       shopChoice = Integer.parseInt( in.readLine() );
@@ -239,9 +249,9 @@ public class Woo {
     s += "\t1:  + \n"; // fill in, list item in inventory
     s += "\t2: + \n"; // fill in, list item in inventory
     s += "\t3: + \n"; // fill in, list item in inventory
-    s += "\t4: Exit Shop. ";
-    s += "\t5: Back";
-    s += "Selection: ";
+    s += "\t4: Exit Shop \n";
+    s += "\t5: Back\n";
+    s += "Selection: \n";
     System.out.print( s );
     try {
       sellChoice = Integer.parseInt( in.readLine() );
@@ -266,11 +276,11 @@ public class Woo {
 
   public static void main( String[] args ) {
     Woo game = new Woo();
-    while( stages < maxStages ) {
+    while( days <= maxDays ) {
       if ( !game.Turn() ) {
         break;
       }
-      stages += 1;
+      days += 1;
     }
       System.out.println( "Thy game doth be over." );
   }

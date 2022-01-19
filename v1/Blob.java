@@ -3,7 +3,7 @@ public class Blob extends Monster {
   public int _baseDamage;
 
   public static String about() {
-    return "This blob is looking for some food.";
+    return "who is looking for some food.";
   }
 
   public Blob() {

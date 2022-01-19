@@ -36,6 +36,14 @@ public class Character {
     return defense;
   }
 
+  public int getAttack() {
+    return baseDamage;
+  }
+
+  public void addHealth(int value) {
+    health += value;
+  }
+
   public boolean isAlive() {
     return health > 0;
   }

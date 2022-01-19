@@ -3,7 +3,7 @@ public class Slug extends Monster {
   public int _baseDamage;
 
   public static String about() {
-    return "This rat is looking at you a little hungrily.";
+    return "who is looking at you weird.";
   }
 
   public Slug() {
