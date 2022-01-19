@@ -1,3 +1,5 @@
+package v1.monsters;
+
 public class Monster extends Character {
   public int baseDamage;
   public int damageMult;
@@ -12,7 +14,7 @@ public class Monster extends Character {
   }
 
   public String getRole () {
-    return "Monster";
+    return "v1.monsters.Monster";
   }
 
   public boolean isAlive() {

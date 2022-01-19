@@ -42,6 +42,6 @@ _*
 Thumbs.db
 ehthumbs.db
 
-# Filenames with special characters
+# Filenames with special v1.characters
 **/*[\\/\:;*?!'"<>|$º•¶§∞¢£]*
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

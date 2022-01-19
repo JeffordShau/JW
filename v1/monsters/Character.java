@@ -1,3 +1,5 @@
+package v1.monsters;
+
 public class Character {
   protected String name;
   protected int health;

@@ -1,3 +1,5 @@
+package v1.characters;
+
 public class Cursed_Hero extends Protagonist {
 
   public Cursed_Hero(String name) {
@@ -9,7 +11,7 @@ public class Cursed_Hero extends Protagonist {
   }
 
   public String getRole() {
-    return "Cursed_Hero";
+    return "v1.v1.characters.Cursed_Hero";
   }
 
 }

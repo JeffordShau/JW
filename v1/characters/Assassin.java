@@ -1,3 +1,5 @@
+package v1.characters;
+
 public class Assassin extends Protagonist {
 
   public Assassin(String name) {

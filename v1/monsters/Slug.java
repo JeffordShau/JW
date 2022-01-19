@@ -1,3 +1,7 @@
+package v1.monsters;
+
+import v1.monsters.Monster;
+
 public class Slug extends Monster {
   public int _health;
   public int _baseDamage;
@@ -13,7 +17,7 @@ public class Slug extends Monster {
   }
 
   public String getRole () {
-    return "Slug";
+    return "v1.monsters.Slug";
   }
 
 }

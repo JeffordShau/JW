@@ -1,3 +1,7 @@
+package v1.monsters;
+
+import v1.monsters.Monster;
+
 public class Rat extends Monster {
   public int _health;
   public int _baseDamage;
@@ -13,7 +17,7 @@ public class Rat extends Monster {
   }
 
   public String getRole () {
-    return "Rat";
+    return "v1.monsters.Rat";
   }
 
 }

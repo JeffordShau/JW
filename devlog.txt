@@ -80,7 +80,7 @@ Jefford Shau :: Edited and finalized the proposal
 
 2022-01-18
 --------------------------------------------------------------
-Jefford Shau :: Added character files, Woo.java compilable, 
+Jefford Shau :: Added v1.characters files, Woo.java compilable,
 updated .gitinore with "value-added" version
 William Vongphanith :: Added item files
 ==============================================================

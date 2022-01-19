@@ -1,4 +1,4 @@
-package v0.items;
+package v1.items;
 
 public class shopItem {
     protected String name;

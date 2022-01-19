@@ -1,3 +1,5 @@
+package v1.characters;
+
 public class Rogue extends Protagonist {
 
   public Rogue(String name) {
@@ -9,7 +11,7 @@ public class Rogue extends Protagonist {
   }
 
   public String getRole() {
-    return "Rogue";
+    return "v1.v1.characters.Rogue";
   }
 
 }

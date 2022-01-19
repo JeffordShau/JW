@@ -5,6 +5,11 @@ FP -- Show Us What You Got
 2022-01-13
 */
 
+import v1.characters.Assassin;
+import v1.characters.Protagonist;
+import v1.characters.Warrior;
+import v1.monsters.Monster;
+
 import java.io;
 import java.utils;
 
@@ -39,9 +44,9 @@ public class Woo {
     // implement hero classes
     s = "The Hero has arrived!";
     s += "\nChoose your hero: \n";
-    s += "\t1: Warrior: " + Warrior.about() + "\n";
+    s += "\t1: v1.v1.characters.Warrior: " + Warrior.about() + "\n";
     s += "\t2: Priest: " + Priest.about() + "\n";
-    s += "\t3: Assassin: " + Assassin.about() + "\n";
+    s += "\t3: v1.v1.characters.Assassin: " + Assassin.about() + "\n";
     s += "\t4: Mage: " + Mage.about() + "\n";
     s += "Selection: ";
     System.out.print( s );
@@ -153,7 +158,7 @@ public class Woo {
         else if ( i == 3 ) {
           System.out.println("You begin to escape. The monster slashes at you before you escape.");
           d2 = smaug.attack( pat );
-          System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + d2 + " points of damage.");
+          System.out.println( "\n" + "v1.monsters.Monster smacked " + pat.getName() + " for " + d2 + " points of damage.");
           System.out.println("\nYe health: " + pat.getHealth());
         }
       }
@@ -163,7 +168,7 @@ public class Woo {
       int d1, d2;
       d1 = pat.attack( smaug );
       System.out.println( "\n" + pat.getName() + " dealt " + d1 + " points of damage.");
-      System.out.println("\nMonster health: " + smaug.getHealth());
+      System.out.println("\nv1.monsters.Monster health: " + smaug.getHealth());
       // healing Role if implemented
       // if (pat.getRole() == "Priest") {
       //   pat.getHeal();
@@ -171,7 +176,7 @@ public class Woo {
       //   System.out.println("\nYe health: " + pat.getHealth());
       // }
       d2 = smaug.attack( pat );
-      System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + d2 + " points of damage.");
+      System.out.println( "\n" + "v1.monsters.Monster smacked " + pat.getName() + " for " + d2 + " points of damage.");
       System.out.println("\nYe health: " + pat.getHealth());
     }
 

@@ -1,19 +1,21 @@
-public class Blob extends Monster {
+package v1.monsters;
+
+public class Crow extends Monster {
   public int _health;
   public int _baseDamage;
 
   public static String about() {
-    return "who is looking for some food.";
+    return "Caw, caw.";
   }
 
-  public Blob() {
+  public Crow() {
     super();
-    _health = 6;
+    _health = 4;
     _baseDamage = 4;
   }
 
   public String getRole () {
-    return "Blob";
+    return "v1.monsters.Crow";
   }
 
 }

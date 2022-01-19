@@ -1,3 +1,5 @@
+import v1.characters.Character;
+
 public class Protagonist extends Character {
 
   public Protagonist() {
@@ -18,7 +20,7 @@ public class Protagonist extends Character {
   }
 
   public String getRole () {
-    return "Protagonist";
+    return "v1.v1.characters.Protagonist";
   }
 
   public String getName () {
