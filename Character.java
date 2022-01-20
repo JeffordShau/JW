@@ -24,3 +24,4 @@ public class Character {
     defense = 10;
     gems = 0;
   }
+}

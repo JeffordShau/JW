@@ -10,7 +10,7 @@ public class Protagonist extends Character {
     super(name);
   }
 
-  public getGems(int randGems) {
+  public void getGems(int randGems) {
     gems += randGems;
   }
 

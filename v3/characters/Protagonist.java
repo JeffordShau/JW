@@ -1,4 +1,4 @@
-import v1.characters.Character;
+package characters;
 
 public class Protagonist extends Character {
 
@@ -10,10 +10,13 @@ public class Protagonist extends Character {
     super(name);
   }
 
-  public void getGems(int randGems) {
-    gems += randGems;
+  public int getGems() {
+    return gems;
   }
 
+  public void addGems(int randGems) {
+    gems += randGems;
+  }
 
   public void getHeal() {
     health += 5;
@@ -25,5 +28,9 @@ public class Protagonist extends Character {
 
   public String getName () {
     return name;
+  }
+
+  public boolean isAlive() {
+    return health > 0;
   }
 }
