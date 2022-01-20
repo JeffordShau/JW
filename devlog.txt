@@ -5,25 +5,6 @@ pd 6
 ---------------------
 Text-Based RPG
 
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-USAGE:
-* Replace all fields, angle brackets included, with specified info.
-  eg, pd <pd#> --> pd 3
-* Delete this instruction block once all teammates understand usage.
-
-devlog--
-Use keyboard shortcut to jump to end,
- replicate entry template,
- modify appropriately.
-
-zone of reflection--
-Flesh out each category whenever necessary, appropriate.
- Need not be fully filled in until end of project,
- but best done as you go along.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 /////////// Zone of Reflection \\\\\\\\\\\
 ------------------------------------------
 OBSTACLES OVERCOME
@@ -80,6 +61,7 @@ Jefford Shau :: Edited and finalized the proposal
 
 2022-01-18
 --------------------------------------------------------------
-Jefford Shau :: Added character files
+Jefford Shau :: Added v1.characters files, Woo.java compilable,
+updated .gitinore with "value-added" version
 William Vongphanith :: Added item files
 ==============================================================
