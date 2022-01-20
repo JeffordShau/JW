@@ -6,10 +6,10 @@ FP -- Show Us What You Got
 */
 
 // v1.characters for protagonist
-import v1.characters.*;
+import characters.*;
 
 // monsters to fight
-import v1.monsters.*;
+import monsters.*;
 
 import java.io.*;
 
@@ -73,7 +73,7 @@ public class Woo {
   // one turn/stage
   public boolean Turn() {
     if (pat.isAlive()) {
-      if (pat.getRole() == "v1.v1.characters.Rogue") {
+      if (pat.getRole() == "Rogue") {
         if (pat.getHealth() < 20) {
           System.out.println("Your Bracelet of Life healed you for 1 hp!");
           pat.addHealth(1);
@@ -98,7 +98,26 @@ public class Woo {
           System.out.println("You looked around and found " + randGems + " gems!");
           pat.addGems(randGems);
           pat.getGems();
-          System.out.println("You do not spot any monsters today. You set up camp and sleep away the night.");
+          s = "You do not spot any monsters today. What would you like to do?";
+          s += "\t1: Search for monsters\n";
+          s += "\t2: Use Item\n";
+          s += "\t3: Sleep\n";
+          int turnChoice = 0;
+          System.out.println(s);
+          try {
+            turnChoice = in.readLine();
+          }
+          catch ( IOException e ) { }
+          if (turnChoice == 1) {
+            battleMonster();
+          } else if (turnChoice == 2) {
+            useItem();
+          } else if (turnChoice == 3) {
+            return true;
+          } else {
+            System.out.println("We could not identify your action. The hero went to sleep for the night.");
+            return true;
+          }
         }
         // fights a monster
         else if (stageSel < 8) {
@@ -112,7 +131,7 @@ public class Woo {
             pat.addItem(items[itemIdx]);
           }
           else {
-            System.out.println("Your inventory is full. If you want to drop an item to exchange for the new one, type the name of the item you want to drop.");
+            System.out.println("Your inventory is full. If you want to pick up the item, you must drop an item. Type the name of the item you want to drop.");
             String itemToDrop = "";
             try {
               itemToDrop = in.readLine();
@@ -120,7 +139,7 @@ public class Woo {
               pat.addItem(items[itemIdx]);
             }
             catch (IOException e) {
-              System.out.println("You did not enter a valid item name. You do not drop anything.");
+              System.out.println("You did not enter a valid item name. You were unable to pick up the item.");
             }
           }
         }
@@ -205,10 +224,15 @@ public class Woo {
     }
   }
 
+  public void useItem() {
+    
+  }
+
   // shop interface
   public void shop() {
     String s;
     int shopChoice = 0;
+    ArrayList<Item> totalItems = new ArrayList<Item>();
     s = "Hero welcome to the shop! Would you ilke to: \n";
     s += "\t1: Buy\n";
     s += "\t2: Sell\n";

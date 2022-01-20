@@ -1,5 +1,6 @@
 package characters;
 import java.util.ArrayList;
+import items.*;
 
 public class Character {
   protected String name;

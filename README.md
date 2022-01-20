@@ -3,5 +3,10 @@ Roster: Jefford Shau, William Vongphanith
 =======
 
 
-Proposal in development
-https://docs.google.com/document/d/1CJxsuA0AefkqnspD9lNvZamqFTAUDY6seqsq9PMyYkg/edit?usp=sharing 
+Project Description:
+Our project is a text-based RPG. This RPG allows the player to fight monsters and use items. 
+
+
+
+How-to-launch:
+1. Run the latest version in terminal using "javac Woo.java && java Woo".

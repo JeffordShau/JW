@@ -58,10 +58,15 @@ William Vongphanith :: Added to proposal
 Jefford Shau :: Edited and finalized the proposal
 ==============================================================
 
-
 2022-01-18
 --------------------------------------------------------------
 Jefford Shau :: Added v1.characters files, Woo.java compilable,
 updated .gitinore with "value-added" version
 William Vongphanith :: Added item files
+==============================================================
+
+2022-01-19
+--------------------------------------------------------------
+Jefford Shau :: Updated README
+William Vongphanith :: Added packages
 ==============================================================
