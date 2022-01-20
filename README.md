@@ -4,8 +4,7 @@ Roster: Jefford Shau, William Vongphanith
 
 
 Project Description:
-Our project is a text-based RPG. This RPG allows the player to fight monsters and use items. 
-
+Our project is a text-based RPG. This RPG allows the player to fight monsters and use items.
 
 
 How-to-launch:
