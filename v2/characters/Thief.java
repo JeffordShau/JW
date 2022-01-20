@@ -1,4 +1,4 @@
-package v1.characters;
+package characters;
 
 public class Thief extends Protagonist {
 
