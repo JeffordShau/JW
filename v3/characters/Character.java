@@ -9,7 +9,7 @@ public class Character {
   protected int damageMult;
   protected int defense;
   protected int gems;
-  protected ArrayList<Item> inventory;
+  protected ArrayList<Item> inventory = new ArrayList<Item>();
 
   public Character() {
     health = 20;
@@ -20,7 +20,7 @@ public class Character {
   }
 
   public Character(String name) {
-    name = name;
+    this.name = name;
     health = 20;
     baseDamage = 1;
     damageMult = 1;
@@ -79,9 +79,9 @@ public class Character {
     return inventory;
   }
 
-  public Item findByType (String type) {
+  public Item findById (String type) {
     for (Item item : inventory) {
-      if (item.getName().equals(type)) {
+      if (item.getId().equals(type)) {
         return item;
       }
     }

@@ -7,6 +7,8 @@ FP -- Show Us What You Got
 
 import characters.*;
 import items.*;
+import items.Shield;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -21,7 +23,7 @@ public class Woo {
   private BufferedReader in;
 
   // total items arraylist
-  private Item[] items = {new sword("Wooden Sword", 30, 100), new shield("Wooden Shield", 20, 100)};
+  private Item[] items = {new Sword("Wooden Sword", "A basic sword to fight monsters with.", 30, 100), new Shield("Wooden Shield", "A basic shield to protect yourself with.", 20, 100)};
 
   // default constructor
   public Woo() {
@@ -53,7 +55,9 @@ public class Woo {
     try {
       name = in.readLine();
     }
-    catch ( IOException e ) { }
+    catch ( IOException e ) {
+      System.out.println( "Error reading name. " );
+    }
     if (playerChoice == 1) {
       pat = new Rogue(name);
     } else if (playerChoice == 2) {
@@ -137,7 +141,7 @@ public class Woo {
             String itemToDrop = "";
             try {
               itemToDrop = in.readLine();
-              pat.removeItem(pat.findByType(itemToDrop));
+              pat.removeItem(pat.findById(itemToDrop));
               pat.addItem(items[itemIdx]);
             }
             catch (IOException e) {

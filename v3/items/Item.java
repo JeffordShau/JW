@@ -1,44 +1,42 @@
 package items;
 
-import java.util.ArrayList;
-import characters.*;
-
 public class Item {
   protected String name;
-  protected int price;
+  protected String id;
+  protected String description;
   protected int durability;
+  protected int power;
 
   public Item() {
-    name = "";
-    price = 0;
-    durability = 100;
+    this.name = "Item";
+    this.description = "A default item.";
   }
 
-  public Item(String name, int cost, int durable) {
-    name = name;
-    price = cost;
-    durability = durable;
+  public Item(String name, String id, String description, int durability, int power) {
+    this.name = name;
+    this.description = description;
+    this.id = id;
+    this.durability = durability;
+    this.power = power;
   }
 
-  public String getName() {
+  public String getName () {
     return name;
   }
 
-  public int getCost() {
-    return price;
+  public String getId () {
+    return id;
   }
 
-  public int getDurability() {
+  public String getDescription () {
+    return description;
+  }
+
+  public int getDurability () {
     return durability;
   }
 
-  public int reduceDurability() {
-    int damage = (int) (Math.random() * 20);
-    durability -= damage;
-    return damage;
-  }
-
-  public String toString() {
-    return name + " (" + durability + " durability)";
+  public int getPower () {
+    return power;
   }
 }

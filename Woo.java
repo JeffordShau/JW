@@ -5,13 +5,12 @@ FP -- Show Us What You Got
 2022-01-13
 */
 
-// v1.characters for protagonist
-import v1.characters.*;
-
-// monsters to fight
-import v1.monsters.*;
+import characters.*;
+import items.*;
+import items.Shield;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Woo {
   private final static int maxDays = 30; // set the max number of days
@@ -22,6 +21,9 @@ public class Woo {
 
   private InputStreamReader isr;
   private BufferedReader in;
+
+  // total items arraylist
+  private Item[] items = {new sword("Wooden Sword", 30, 100), new Shield("Wooden Shield", 20, 100)};
 
   // default constructor
   public Woo() {
@@ -37,10 +39,10 @@ public class Woo {
     int playerChoice = 0;
     s = "The Hero has arrived!";
     s += "\nChoose your hero: \n";
-    s += "\t1: Easy: \n\tv1.v1.characters.Rogue: " + Rogue.about() + "\n";
-    s += "\t2: Normal: \n\tv1.v1.characters.Warrior: " + Warrior.about() + "\n";
-    s += "\t3: Hard: \n\tv1.v1.characters.Assassin: " + Assassin.about() + "\n";
-    s += "\t4: Very Hard: \n\tv1.v1.characters.Thief: " + Thief.about() + "\n";
+    s += "\t1: Easy: \n\tRogue: " + Rogue.about() + "\n";
+    s += "\t2: Normal: \n\tWarrior: " + Warrior.about() + "\n";
+    s += "\t3: Hard: \n\tAssassin: " + Assassin.about() + "\n";
+    s += "\t4: Very Hard: \n\tThief: " + Thief.about() + "\n";
     s += "\t5: Impossible: \n\tCursed Hero: " + Cursed_Hero.about() + "\n";
     s += "Selection: ";
     System.out.print( s );
@@ -48,7 +50,7 @@ public class Woo {
       playerChoice = Integer.parseInt( in.readLine() );
     }
     catch (IOException e) { }
-    s = "Chosen one, what is your great name? ";
+    s = "Chosen one, what is thy great name? ";
     System.out.print( s );
     try {
       name = in.readLine();
@@ -65,15 +67,16 @@ public class Woo {
     } else if (playerChoice == 5) {
       pat = new Cursed_Hero(name);
     } else {
-      System.out.println("We could not identify a hero to match your description. A default hero was provided.");
+      System.out.println("Hero unidentified. A default hero was provided.");
       pat = new Protagonist( name );
     }
   } // end newGame
 
   // one turn/stage
   public boolean Turn() {
+    String s;
     if (pat.isAlive()) {
-      if (pat.getRole() == "v1.v1.characters.Rogue") {
+      if (pat.getRole() == "Rogue") {
         if (pat.getHealth() < 20) {
           System.out.println("Your Bracelet of Life healed you for 1 hp!");
           pat.addHealth(1);
@@ -98,7 +101,27 @@ public class Woo {
           System.out.println("You looked around and found " + randGems + " gems!");
           pat.addGems(randGems);
           pat.getGems();
-          System.out.println("You do not spot any monsters today. You set up camp and sleep away the night.");
+          s = "You do not spot any monsters today. What would you like to do?\n";
+          s += "\t1: Search for monsters\n";
+          s += "\t2: Use Item\n";
+          s += "\t3: Sleep\n";
+          int turnChoice = 0;
+          System.out.println(s);
+          try {
+            turnChoice = Integer.parseInt(in.readLine());
+          }
+          catch ( IOException e ) { }
+          if (turnChoice == 1) {
+            battleMonster();
+          } else if (turnChoice == 2) {
+            useItem();
+          } else if (turnChoice == 3) {
+            System.out.println("You decide to take a nap.");
+            return true;
+          } else {
+            System.out.println("We could not identify your action. You went to sleep for the night.");
+            return true;
+          }
         }
         // fights a monster
         else if (stageSel < 8) {
@@ -106,19 +129,33 @@ public class Woo {
         }
         // random item drop
         else if (stageSel < 10) {
-          int itemIdx = Math.floor(Math.random() * items.length);
+          int itemIdx = (int) (Math.random() * items.length);
           System.out.println("You found a " + items[itemIdx] + "!");
-          // if (pat.)
+          if (pat.inventorySize() < 4) {
+            pat.addItem(items[itemIdx]);
+          }
+          else {
+            System.out.println("Your inventory is full. If you want to pick up the item, you must drop an item. Type the name of the item you want to drop.");
+            String itemToDrop = "";
+            try {
+              itemToDrop = in.readLine();
+              pat.removeItem(pat.findByType(itemToDrop));
+              pat.addItem(items[itemIdx]);
+            }
+            catch (IOException e) {
+              System.out.println("You did not enter a valid item name. You were unable to pick up the item.");
+            }
+          }
         }
+      }
+      // final boss
+      else if (days == maxDays) {
+        // fight final boss
       }
       // shop
       else if (days % 7 == 0) {
         System.out.println("As you walk forward, you see a merchant ahead of you.");
         shop();
-      }
-      // final boss
-      else if (days == maxDays) {
-        // fight final boss
       }
       return true;
     }
@@ -163,19 +200,19 @@ public class Woo {
           int first, second;
           first = pat.attack( smaug );
           System.out.println( "\n" + pat.getName() + " dealt " + first + " damage.");
-          System.out.println("\nv1.monsters.Monster health: " + smaug.getHealth());
+          System.out.println("\nMonster health: " + smaug.getHealth());
           second = smaug.attack( pat );
-          System.out.println( "\n" + "v1.monsters.Monster smacked " + pat.getName() + " for " + second + " points of damage.");
+          System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + second + " points of damage.");
           System.out.println("\nYe health: " + pat.getHealth());
         }
         else if (order == 1) {
           int first, second;
           second = smaug.attack( pat );
-          System.out.println( "\n" + "v1.monsters.Monster smacked " + pat.getName() + " for " + second + " points of damage.");
+          System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + second + " points of damage.");
           System.out.println("\nYe health: " + pat.getHealth());
           first = pat.attack( smaug );
           System.out.println( "\n" + pat.getName() + " dealt " + first + " points of damage.");
-          System.out.println("\nv1.monsters.Monster health: " + smaug.getHealth());
+          System.out.println("\nMonster health: " + smaug.getHealth());
         }
       }
       else if ( i == 2 ) {
@@ -184,17 +221,22 @@ public class Woo {
       else if ( i == 3 ) {
         System.out.println("You begin to escape, but the monster slashes at you one time before you escape.");
         int fleeDmg = smaug.attack( pat );
-        System.out.println( "\n" + "v1.monsters.Monster smacked " + pat.getName() + " for " + fleeDmg + " points of damage.");
+        System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + fleeDmg + " points of damage.");
         System.out.println("\nYe health: " + pat.getHealth());
         return;
       }
     }
   }
 
+  public void useItem() {
+
+  }
+
   // shop interface
   public void shop() {
     String s;
     int shopChoice = 0;
+    ArrayList<Item> totalItems = new ArrayList<Item>();
     s = "Hero welcome to the shop! Would you ilke to: \n";
     s += "\t1: Buy\n";
     s += "\t2: Sell\n";
