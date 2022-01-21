@@ -20,7 +20,8 @@ public class Woo {
   private InputStreamReader isr;
   private BufferedReader in;
 
-  private Item[] items = {new sword(), new shield()};
+  // total items arraylist
+  private Item[] items = {new sword("Wooden Sword", 30, 100), new shield("Wooden Shield", 20, 100)};
 
   // default constructor
   public Woo() {
@@ -47,7 +48,7 @@ public class Woo {
       playerChoice = Integer.parseInt( in.readLine() );
     }
     catch (IOException e) { }
-    s = "Chosen one, what is your great name? ";
+    s = "Chosen one, what is thy great name? ";
     System.out.print( s );
     try {
       name = in.readLine();
@@ -64,7 +65,7 @@ public class Woo {
     } else if (playerChoice == 5) {
       pat = new Cursed_Hero(name);
     } else {
-      System.out.println("We could not identify a hero to match your description. A default hero was provided.");
+      System.out.println("Hero unidentified. A default hero was provided.");
       pat = new Protagonist( name );
     }
   } // end newGame
@@ -98,7 +99,7 @@ public class Woo {
           System.out.println("You looked around and found " + randGems + " gems!");
           pat.addGems(randGems);
           pat.getGems();
-          s = "You do not spot any monsters today. What would you like to do?";
+          s = "You do not spot any monsters today. What would you like to do?\n";
           s += "\t1: Search for monsters\n";
           s += "\t2: Use Item\n";
           s += "\t3: Sleep\n";
@@ -113,9 +114,10 @@ public class Woo {
           } else if (turnChoice == 2) {
             useItem();
           } else if (turnChoice == 3) {
+            System.out.println("You decide to take a nap.");
             return true;
           } else {
-            System.out.println("We could not identify your action. The hero went to sleep for the night.");
+            System.out.println("We could not identify your action. You went to sleep for the night.");
             return true;
           }
         }
@@ -144,14 +146,14 @@ public class Woo {
           }
         }
       }
+      // final boss
+      else if (days == maxDays) {
+        // fight final boss
+      }
       // shop
       else if (days % 7 == 0) {
         System.out.println("As you walk forward, you see a merchant ahead of you.");
         shop();
-      }
-      // final boss
-      else if (days == maxDays) {
-        // fight final boss
       }
       return true;
     }
@@ -225,7 +227,7 @@ public class Woo {
   }
 
   public void useItem() {
-    
+
   }
 
   // shop interface

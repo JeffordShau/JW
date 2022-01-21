@@ -11,7 +11,7 @@ public class Cursed_Hero extends Protagonist {
   }
 
   public String getRole() {
-    return "v1.v1.characters.Cursed_Hero";
+    return "Cursed Hero";
   }
 
 }

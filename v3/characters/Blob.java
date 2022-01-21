@@ -15,7 +15,7 @@ public class Blob extends Monster {
   }
 
   public String getRole () {
-    return "v1.monsters.Blob";
+    return "Blob";
   }
 
 }

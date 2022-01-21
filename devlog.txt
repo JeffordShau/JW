@@ -60,7 +60,7 @@ Jefford Shau :: Edited and finalized the proposal
 
 2022-01-18
 --------------------------------------------------------------
-Jefford Shau :: Added v1.characters files, Woo.java compilable,
+Jefford Shau :: Added characters files, Woo.java compilable,
 updated .gitinore with "value-added" version
 William Vongphanith :: Added item files
 ==============================================================
@@ -69,4 +69,10 @@ William Vongphanith :: Added item files
 --------------------------------------------------------------
 Jefford Shau :: Updated README
 William Vongphanith :: Added packages
+==============================================================
+
+2022-01-19
+--------------------------------------------------------------
+Jefford Shau :: Updated devlog.txt and flowchart
+William Vongphanith :: Fixed compile errors
 ==============================================================

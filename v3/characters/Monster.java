@@ -14,7 +14,7 @@ public class Monster extends Character {
   }
 
   public String getRole () {
-    return "v1.monsters.Monster";
+    return "Monster";
   }
 
   public boolean isAlive() {

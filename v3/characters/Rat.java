@@ -15,7 +15,7 @@ public class Rat extends Monster {
   }
 
   public String getRole () {
-    return "v1.monsters.Rat";
+    return "Rat";
   }
 
 }

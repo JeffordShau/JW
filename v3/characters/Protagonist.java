@@ -23,7 +23,7 @@ public class Protagonist extends Character {
   }
 
   public String getRole () {
-    return "v1.v1.characters.Protagonist";
+    return "Protagonist";
   }
 
   public String getName () {

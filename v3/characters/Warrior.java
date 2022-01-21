@@ -11,7 +11,7 @@ public class Warrior extends Protagonist {
   }
 
   public String getRole() {
-    return "v1.v1.characters.Warrior";
+    return "Warrior";
   }
 
 }

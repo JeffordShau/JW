@@ -15,7 +15,7 @@ public class Slug extends Monster {
   }
 
   public String getRole () {
-    return "v1.monsters.Slug";
+    return "Slug";
   }
 
 }

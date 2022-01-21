@@ -15,7 +15,7 @@ public class Crow extends Monster {
   }
 
   public String getRole () {
-    return "v1.monsters.Crow";
+    return "Crow";
   }
 
 }

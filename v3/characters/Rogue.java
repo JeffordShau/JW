@@ -11,7 +11,7 @@ public class Rogue extends Protagonist {
   }
 
   public String getRole() {
-    return "v1.v1.characters.Rogue";
+    return "Rogue";
   }
 
 }
