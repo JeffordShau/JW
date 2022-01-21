@@ -39,4 +39,8 @@ public class Item {
   public int getPower () {
     return power;
   }
+
+  public String toString () {
+    return name + " (id: " + id + ")";
+  }
 }
