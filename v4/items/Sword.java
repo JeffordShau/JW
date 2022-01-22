@@ -9,14 +9,14 @@ public class Sword extends Item {
         super(itemName, itemId, itemDescription, 100, 10);
     }
 
-    public Sword (String name, String description, int durability, int power) {
-        super(name, itemId, description, durability, power);
+    public Sword (String name, int durability, int power) {
+        super(name, itemId, itemDescription, durability, power);
     }
 
     public int use () {
         // random attack val from 1-5
-        int attack = (int) (Math.random() * 4) + 1;
-        durability -= attack;
-        return attack * power;
+        int reduction = (int) (Math.random() * 5) * 2;
+        durability -= reduction;
+        return power;
     }
 }

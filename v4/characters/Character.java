@@ -79,6 +79,10 @@ public class Character {
     return inventory;
   }
 
+  public Item getInventoryIdx (int idx) {
+    return inventory.get(idx);
+  }
+
   public Item findById (String type) {
     for (Item item : inventory) {
       if (item.getId().equals(type)) {

@@ -36,6 +36,10 @@ public class Item {
     return durability;
   }
 
+  public void setDurability (int num) {
+    durability = num; 
+  }
+
   public int getPower () {
     return power;
   }

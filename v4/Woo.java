@@ -22,7 +22,7 @@ public class Woo {
   private BufferedReader in;
 
   // total items arraylist
-  private Item[] items = {new Sword("Wooden Sword", "A basic sword to fight monsters with.", 30, 100), new Shield("Wooden Shield", "A basic shield to protect yourself with.", 20, 100)};
+  private Item[] items = {new Sword("Wooden Sword", 30, 100), new Shield("Wooden Shield", 20, 100)};
 
   // default constructor
   public Woo() {
@@ -88,7 +88,7 @@ public class Woo {
       // randomly assigns the stage depending on day number
       if (days % 7 != 0 && days != maxDays) {
         int stageSel = (int) (Math.random() * 10);
-        // receives a few gems, nothing happens
+        // receives a few gems, has a choice on next action
         if (stageSel < 2) {
           if (days < 10) {
             randGems = (int) (Math.random() * 10);
@@ -133,10 +133,13 @@ public class Woo {
           int itemIdx = (int) (Math.random() * items.length);
           System.out.println("You found a " + items[itemIdx] + "!");
           if (pat.inventorySize() < 4) {
-            pat.addItem(items[itemIdx]);
+            Item foundItem = items[itemIdx];
+            int randDur = ((int) Math.random() * 50) * 2;
+            foundItem.setDurability(randDur);
+            pat.addItem(foundItem);
           }
           else {
-            System.out.println("Your inventory is full. If you want to pick up the item, you must drop an item. Type the name of the item you want to drop.");
+            System.out.println("Your inventory is full. You must drop an item to pick one up. What is your choice?");
             String itemToDrop = "";
             try {
               itemToDrop = in.readLine();
@@ -164,6 +167,22 @@ public class Woo {
     else {
       return false;
     }
+  }
+
+  public String displayInventoryItem (int idx) {
+    String t = "";
+    t = pat.getInventoryIdx(idx); 
+    t += "\t1: Easy: \n\tRogue: " + Rogue.about() + "\n";
+    t += "\t2: Normal: \n\tWarrior: " + Warrior.about() + "\n";
+    t += "\t3: Hard: \n\tAssassin: " + Assassin.about() + "\n";
+    t += "\t4: Very Hard: \n\tThief: " + Thief.about() + "\n";
+    t += "\t5: Impossible: \n\tCursed Hero: " + Cursed_Hero.about() + "\n";
+    t += "Selection: ";
+    return t;
+  }
+
+  public void useItem() {
+
   }
 
   public void battleMonster() {
@@ -227,10 +246,6 @@ public class Woo {
         return;
       }
     }
-  }
-
-  public void useItem() {
-
   }
 
   // shop interface
@@ -332,6 +347,11 @@ public class Woo {
       }
       days += 1;
     }
-    System.out.println( "Thy game doth be over." );
+    if (days > maxDays) {
+      System.out.println("Congrats Hero! Your arduous journey is now over.");
+    }
+    else {
+      System.out.println("You have died.");
+    }
   }
 }

@@ -9,14 +9,14 @@ public class Shield extends Item {
         super(itemName, itemId, itemDescription, 100, 10);
     }
 
-    public Shield (String name, String description, int durability, int power) {
-        super(name, itemId, description, durability, power);
+    public Shield (String name, int durability, int power) {
+        super(name, itemId, itemDescription, durability, power);
     }
 
     public int use () {
         // random protection val from 1-10
-        int protection = (int) (Math.random() * 9) + 1;
-        durability -= protection;
-        return protection * power;
+        int reduction = (int) (Math.random() * 9) + 1;
+        durability -= reduction;
+        return power;
     }
 }
