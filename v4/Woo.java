@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class Woo {
   private final static int maxDays = 30; // set the max number of days
   private static int days = 1;
+  private int nextitemId = 3;
   // Instance variables
   private Protagonist pat;
   private Monster smaug;
@@ -22,7 +23,7 @@ public class Woo {
   private BufferedReader in;
 
   // total items arraylist
-  private Item[] items = {new Sword("Wooden Sword", 30, 100), new Shield("Wooden Shield", 20, 100)};
+  private Item[] items = {new Sword("Wooden Sword", 1, "a basic sword", 30, 100), new Shield("Wooden Shield", 2, "a basic shield", 20, 100)};
 
   // default constructor
   public Woo() {
@@ -133,16 +134,16 @@ public class Woo {
           int itemIdx = (int) (Math.random() * items.length);
           System.out.println("You found a " + items[itemIdx] + "!");
           if (pat.inventorySize() < 4) {
-            Item foundItem = items[itemIdx];
-            int randDur = ((int) Math.random() * 50) * 2;
-            foundItem.setDurability(randDur);
-            pat.addItem(foundItem);
+            // Item foundItem = items[itemIdx];
+            // int randDur = ((int) Math.random() * 50) * 2;
+            // foundItem.setDurability(randDur);
+            // pat.addItem(foundItem);
           }
           else {
             System.out.println("Your inventory is full. You must drop an item to pick one up. What is your choice?");
-            String itemToDrop = "";
+            int itemToDrop = 1;
             try {
-              itemToDrop = in.readLine();
+              itemToDrop = Integer.parseInt(in.readLine());
               pat.removeItem(pat.findById(itemToDrop));
               pat.addItem(items[itemIdx]);
             }
@@ -170,19 +171,32 @@ public class Woo {
   }
 
   public String displayInventoryItem (int idx) {
+    Item displayItem = pat.getInventoryIdx(idx);
     String t = "";
-    t = pat.getInventoryIdx(idx); 
-    t += "\t1: Easy: \n\tRogue: " + Rogue.about() + "\n";
-    t += "\t2: Normal: \n\tWarrior: " + Warrior.about() + "\n";
-    t += "\t3: Hard: \n\tAssassin: " + Assassin.about() + "\n";
+    t = "\t1: " + displayItem.getName();
+    t += "\tDurability: " + display.getDurability();
+    t += "\tPower: " + display.about() + "\n";
+    t += "\t: Hard: \n\tAssassin: " + Assassin.about() + "\n";
     t += "\t4: Very Hard: \n\tThief: " + Thief.about() + "\n";
     t += "\t5: Impossible: \n\tCursed Hero: " + Cursed_Hero.about() + "\n";
     t += "Selection: ";
     return t;
   }
 
-  public void useItem() {
+  // public Item createItem (String name, int id, String type, String description, int durability, int power) {
+  //   if (type == "shield") {
+  //     Item newitem = new Shield(name, id, description, durability, power);
+  //     return newitem;
+  //   }
+  //   else if (type == "sword") {
+  //     Item newitem = new Sword(name, id, description, durability, power);
+  //     return newitem;
+  //   }
+  //   Item newitem = new Item();
+  //   return newitem;
+  // }
 
+  public void useItem() {
   }
 
   public void battleMonster() {

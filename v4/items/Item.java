@@ -2,7 +2,7 @@ package items;
 
 public class Item {
   protected String name;
-  protected String id;
+  protected int itemId;
   protected String description;
   protected int durability;
   protected int power;
@@ -12,10 +12,10 @@ public class Item {
     this.description = "A default item.";
   }
 
-  public Item(String name, String id, String description, int durability, int power) {
+  public Item(String name, int id, String description, int durability, int power) {
     this.name = name;
     this.description = description;
-    this.id = id;
+    this.itemId = id;
     this.durability = durability;
     this.power = power;
   }
@@ -24,8 +24,8 @@ public class Item {
     return name;
   }
 
-  public String getId () {
-    return id;
+  public int getId () {
+    return itemId;
   }
 
   public String getDescription () {
@@ -37,7 +37,7 @@ public class Item {
   }
 
   public void setDurability (int num) {
-    durability = num; 
+    durability = num;
   }
 
   public int getPower () {
@@ -45,6 +45,6 @@ public class Item {
   }
 
   public String toString () {
-    return name + " (id: " + id + ")";
+    return name;
   }
 }

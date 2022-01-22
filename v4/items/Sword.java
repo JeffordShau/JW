@@ -1,15 +1,15 @@
 package items;
 
 public class Sword extends Item {
-    private static final String itemId = "sword";
-    private static final String itemName = "Sword";
-    private static final String itemDescription = "A sword to help you slay the monsters that be.";
+    private int itemId = 1;
+    private String itemName = "Sword";
+    private String itemDescription = "A sword to help you slay the monsters that be.";
 
     public Sword () {
         super(itemName, itemId, itemDescription, 100, 10);
     }
 
-    public Sword (String name, int durability, int power) {
+    public Sword (String name, int itemId, String itemDescription, int durability, int power) {
         super(name, itemId, itemDescription, durability, power);
     }
 
