@@ -1,16 +1,16 @@
 package items;
 
 public class Shield extends Item {
-    private int itemId = 1;
-    private String itemName = "Shield";
-    private String itemDescription = "A durable shield that protects you in battle.";
+    private static int itemId = 1;
+    private static String itemName = "Shield";
+    private static String itemDescription = "A durable shield that protects you in battle.";
 
     public Shield () {
         super(itemName, itemId, itemDescription, 100, 10);
     }
 
-    public Shield (String name, int itemId, String itemDescription, int durability, int power) {
-        super(name, itemId, itemDescription, durability, power);
+    public Shield (String name, int id, String description, int durability, int power) {
+        super(name, id, description, durability, power);
     }
 
     public int use () {

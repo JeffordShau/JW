@@ -75,6 +75,10 @@ public class Character {
     inventory.remove(item);
   }
 
+  public void removeItem (int idx) {
+    inventory.remove(idx); 
+  }
+
   public ArrayList<Item> getInventory () {
     return inventory;
   }

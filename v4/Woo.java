@@ -173,25 +173,25 @@ public class Woo {
   public String displayInventoryItem (int idx) {
     Item displayItem = pat.getInventoryIdx(idx);
     String t = "";
-    t = "\t1: " + displayItem.getName();
+    t = displayItem.getName();
     t += "\tDurability: " + displayItem.getDurability();
     t += "\tPower: " + displayItem.getPower();
     t += "\tSell Price: " + displayItem.getDurability(); // adjust this
     return t;
   }
 
-  // public Item createItem (String name, int id, String type, String description, int durability, int power) {
-  //   if (type == "shield") {
-  //     Item newitem = new Shield(name, id, description, durability, power);
-  //     return newitem;
-  //   }
-  //   else if (type == "sword") {
-  //     Item newitem = new Sword(name, id, description, durability, power);
-  //     return newitem;
-  //   }
-  //   Item newitem = new Item();
-  //   return newitem;
-  // }
+  public Item createItem (String name, int id, String type, String description, int durability, int power) {
+    if (type == "shield") {
+      Item newitem = new Shield(name, id, description, durability, power);
+      return newitem;
+    }
+    else if (type == "sword") {
+      Item newitem = new Sword(name, id, description, durability, power);
+      return newitem;
+    }
+    Item newitem = new Item();
+    return newitem;
+  }
 
   public void useItem() {
   }
@@ -321,12 +321,17 @@ public class Woo {
   public void sellInterface() {
     String s;
     int sellChoice = 0;
+    int sellPrice = 0;
+    if (days < 10) {
+      sellPrice = 20 * 
+    }
     s = "\nAnything that will help you on your journey?";
-    s += "\t1:  + \n"; // fill in, list item in inventory
-    s += "\t2: + \n"; // fill in, list item in inventory
-    s += "\t3: + \n"; // fill in, list item in inventory
-    s += "\t4: Exit Shop \n";
-    s += "\t5: Back\n";
+    s += "\t1: " + displayInventoryItem(0) + "\tSell Price: "; // fill in, list item in inventory
+    s += "\t2: " + displayInventoryItem(1) + "\tSell Price: "// fill in, list item in inventory
+    s += "\t3: " + displayInventoryItem(2) + "\tSell Price: "// fill in, list item in inventory
+    s += "\t4: " + displayInventoryItem(3) +"\tSell Price: "// fill in, list item in inventory
+    s += "\t5: Exit Shop \n";
+    s += "\t6: Back\n";
     s += "Selection: \n";
     System.out.print( s );
     try {
@@ -334,18 +339,21 @@ public class Woo {
     }
     catch (IOException e) { }
     if (sellChoice == 1) {
-      // add item to inventory and subtract gems
+      pat.removeItem(0);
     }
     else if (sellChoice == 2) {
-      // add item to inventory and subtract gems
+      pat.removeItem(1);
     }
     else if (sellChoice == 3) {
-      // add item to inventory and subtract gems
+      pat.removeItem(2);
     }
     else if (sellChoice == 4) {
-      return;
+      pat.removeItem(3);
     }
     else if (sellChoice == 5) {
+      return;
+    }
+    else if (sellChoice == 6) {
       shop();
     }
   }
