@@ -1,9 +1,9 @@
 package items;
 
 public class Shield extends Item {
-    private static final String itemId = "shield";
-    private static final String itemName = "Shield";
-    private static final String itemDescription = "A durable shield that protects you in battle.";
+    private final String itemId = "shield";
+    private final String itemName = "Shield";
+    private final String itemDescription = "A durable shield that protects you in battle.";
 
     public Shield () {
         super(itemName, itemId, itemDescription, 100, 10);
