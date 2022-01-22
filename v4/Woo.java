@@ -173,10 +173,20 @@ public class Woo {
   public String displayInventoryItem (int idx) {
     Item displayItem = pat.getInventoryIdx(idx);
     String t = "";
+    int sellPrice = 0;
+    if (days < 10) {
+      sellPrice = 20 * displayItem.getDurability();
+    }
+    else if (days < 20) {
+      sellPrice = 40 * displayItem.getDurability();
+    }
+    else if (days < 30) {
+      sellPrice = 60 * displayItem.getDurability();
+    }
     t = displayItem.getName();
     t += "\tDurability: " + displayItem.getDurability();
     t += "\tPower: " + displayItem.getPower();
-    t += "\tSell Price: " + displayItem.getDurability(); // adjust this
+    t += "\tSell Price: " + sellPrice; // adjust this
     return t;
   }
 
@@ -288,6 +298,7 @@ public class Woo {
   public void buyInterface() {
     String s;
     int buyChoice = 0;
+    
     s = "\nAnything that will help you on your journey?";
     s += "\t1:  + \n"; // fill in
     s += "\t2: + \n"; // fill in
@@ -319,36 +330,40 @@ public class Woo {
 
   // selling interface
   public void sellInterface() {
-    String s;
+    String s, a, b, c, d, f, g, h = "";
     int sellChoice = 0;
-    int sellPrice = 0;
-    if (days < 10) {
-      sellPrice = 20 * 
-    }
     s = "\nAnything that will help you on your journey?";
-    s += "\t1: " + displayInventoryItem(0) + "\tSell Price: "; // fill in, list item in inventory
-    s += "\t2: " + displayInventoryItem(1) + "\tSell Price: "// fill in, list item in inventory
-    s += "\t3: " + displayInventoryItem(2) + "\tSell Price: "// fill in, list item in inventory
-    s += "\t4: " + displayInventoryItem(3) +"\tSell Price: "// fill in, list item in inventory
-    s += "\t5: Exit Shop \n";
-    s += "\t6: Back\n";
-    s += "Selection: \n";
-    System.out.print( s );
+    a = "\t1: " + displayInventoryItem(0); // fill in, list item in inventory
+    b = "\t2: " + displayInventoryItem(1); // fill in, list item in inventory
+    c = "\t3: " + displayInventoryItem(2); // fill in, list item in inventory
+    d = "\t4: " + displayInventoryItem(3); // fill in, list item in inventory
+    f = "\t5: Exit Shop \n";
+    g = "\t6: Back\n";
+    h = "Selection: \n";
+    System.out.print( s + a + b + c + d + f + g + h);
     try {
       sellChoice = Integer.parseInt( in.readLine() );
     }
     catch (IOException e) { }
     if (sellChoice == 1) {
       pat.removeItem(0);
+      int price = Integer.parseInt(a.substring(a.length() - 2, a.length()));
+      pat.addGems(price);
     }
     else if (sellChoice == 2) {
       pat.removeItem(1);
+      int price = Integer.parseInt(b.substring(b.length() - 2, b.length()));
+      pat.addGems(price);
     }
     else if (sellChoice == 3) {
       pat.removeItem(2);
+      int price = Integer.parseInt(c.substring(c.length() - 2, c.length()));
+      pat.addGems(price);
     }
     else if (sellChoice == 4) {
       pat.removeItem(3);
+      int price = Integer.parseInt(d.substring(d.length() - 2, d.length()));
+      pat.addGems(price);
     }
     else if (sellChoice == 5) {
       return;
