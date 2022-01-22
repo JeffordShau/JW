@@ -174,12 +174,9 @@ public class Woo {
     Item displayItem = pat.getInventoryIdx(idx);
     String t = "";
     t = "\t1: " + displayItem.getName();
-    t += "\tDurability: " + display.getDurability();
-    t += "\tPower: " + display.about() + "\n";
-    t += "\t: Hard: \n\tAssassin: " + Assassin.about() + "\n";
-    t += "\t4: Very Hard: \n\tThief: " + Thief.about() + "\n";
-    t += "\t5: Impossible: \n\tCursed Hero: " + Cursed_Hero.about() + "\n";
-    t += "Selection: ";
+    t += "\tDurability: " + displayItem.getDurability();
+    t += "\tPower: " + displayItem.getPower();
+    t += "\tSell Price: " + displayItem.getDurability(); // adjust this
     return t;
   }
 
