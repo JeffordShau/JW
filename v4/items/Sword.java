@@ -1,12 +1,11 @@
 package items;
 
 public class Sword extends Item {
-    private static int itemId = 1;
     private static String itemName = "Sword";
     private static String itemDescription = "A sword to help you slay the monsters that be.";
 
     public Sword () {
-        super(itemName, itemId, itemDescription, 100, 10);
+        super(itemName, itemDescription, 100, 10);
     }
 
     public Sword (String name, int itemId, String itemDescription, int durability, int power) {

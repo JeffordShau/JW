@@ -23,8 +23,8 @@ public class Woo {
   private BufferedReader in;
 
   // total items arraylist
-  private Item[] items = {new Sword("Wooden Sword", 1, "a basic sword", 30, 100), new Shield("Wooden Shield", 2, "a basic shield", 20, 100)};
-
+  private ArrayList<Item> items = new ArrayList<Item>();
+  private ArrayList<Item> buyShop = new ArrayList<Item>();
   // default constructor
   public Woo() {
     isr = new InputStreamReader( System.in );
@@ -60,17 +60,35 @@ public class Woo {
     }
     if (playerChoice == 1) {
       pat = new Rogue(name);
+      Item bracelet_of_life = items.Bracelet("Bracelet of Life", nextitemId, "A legendary healing bracelet", 100, 1);
+      items.add(bracelet_of_life);
+      nextitemId += 1;
     } else if (playerChoice == 2) {
       pat = new Warrior(name);
+      Item bracelet_of_strength = items.Bracelet("Bracelet of Strength", nextitemId, "A legendary strenth bracelet", 100, 1);
+      items.add(bracelet_of_strength);
+      nextitemId += 1;
     } else if (playerChoice == 3) {
       pat = new Assassin(name);
+      Item bracelet_of_stealth = items.Bracelet("Bracelet of Stealth", nextitemId, "A legendary speed bracelet", 100, 1);
+      items.add(bracelet_of_stealth);
+      nextitemId += 1;
     } else if (playerChoice == 4) {
       pat = new Thief(name);
+      Item bracelet_of_wealth = items.Bracelet("Bracelet of Wealth", nextitemId, "A legendary wealth bracelet", 100, 1);
+      items.add(bracelet_of_wealth);
+      nextitemId += 1;
     } else if (playerChoice == 5) {
       pat = new Cursed_Hero(name);
+      Item bracelet_of_poison = items.Bracelet("Bracelet of Poison", nextitemId, "An unremovable cursed bracelet", 100, 1);
+      items.add(bracelet_of_poison);
+      nextitemId += 1;
     } else {
-      System.out.println("Hero unidentified. A default hero was provided.");
-      pat = new Protagonist( name );
+      System.out.println("Hero unidentified. The easiest difficulty has been selected.");
+      pat = new Rogue(name);
+      Item bracelet_of_life = Bracelet("Bracelet of Life", nextitemId, "A legendary healing bracelet", 100, 1);
+      items.add(bracelet_of_life);
+      nextitemId += 1;
     }
   } // end newGame
 
@@ -168,6 +186,14 @@ public class Woo {
     else {
       return false;
     }
+  }
+
+  public String displayBuyItem (int idx) {
+    String s = "";
+    s = buyShop[idx].getName();
+    s += "\tDurability: " + buyShop[idx].getDurability();
+    s += "\tPower: " + buyShop[idx].getPower();
+    return s;
   }
 
   public String displayInventoryItem (int idx) {
@@ -298,13 +324,34 @@ public class Woo {
   public void buyInterface() {
     String s;
     int buyChoice = 0;
-    
+    int buyPrice = 0;
+    int randBuyItems = (int) (Math.random() * 3);
+    if (days < 10) {
+      buyPrice = 30;
+    }
+    else if (days < 20) {
+      buyPrice = 60;
+    }
+    else if (days < 30) {
+      buyPrice = 90;
+    }
+    buyShop.clear();
+    for (int i = 0; i < 3; i++) {
+      if (randBuyItems == 0) {
+        Item buyItem = createItem("Rusty Dagger", nextitemId, "sword", "", 100, 3);
+      }
+      else if (randBuyItems == 1) {
+        Item buyItem = createItem("Wooden Shield", nextitemId, "shield", "", 100, 1);
+      }
+      buyShop.add(buyItem);
+      nextitemId += 1;
+    }
     s = "\nAnything that will help you on your journey?";
-    s += "\t1:  + \n"; // fill in
-    s += "\t2: + \n"; // fill in
-    s += "\t3: + \n"; // fill in
-    s += "\t4: Exit Shop. ";
-    s += "\t5: Back";
+    s += "\t1: " + displayBuyItem(0) + "\n"; // fill in
+    s += "\t2: " + displayBuyItem(1) + "\n"; // fill in
+    s += "\t3: " + displayBuyItem(2) + "\n"; // fill in
+    s += "\t4: Exit Shop\n";
+    s += "\t5: Back\n";
     s += "Selection: ";
     System.out.print( s );
     try {
@@ -312,13 +359,16 @@ public class Woo {
     }
     catch (IOException e) { }
     if (buyChoice == 1) {
-      // add item to inventory and subtract gems
+      pat.additem(buyShop[0]);
+      pat.removeGems(buyPrice);
     }
     else if (buyChoice == 2) {
-      // add item to inventory and subtract gems
-    }
+      pat.additem(buyShop[1]);
+      pat.removeGems(buyPrice);
+     }
     else if (buyChoice == 3) {
-      // add item to inventory and subtract gems
+      pat.additem(buyShop[2]);
+      pat.removeGems(buyPrice);
     }
     else if (buyChoice == 4) {
       return;
@@ -333,10 +383,10 @@ public class Woo {
     String s, a, b, c, d, f, g, h = "";
     int sellChoice = 0;
     s = "\nAnything that will help you on your journey?";
-    a = "\t1: " + displayInventoryItem(0); // fill in, list item in inventory
-    b = "\t2: " + displayInventoryItem(1); // fill in, list item in inventory
-    c = "\t3: " + displayInventoryItem(2); // fill in, list item in inventory
-    d = "\t4: " + displayInventoryItem(3); // fill in, list item in inventory
+    a = "\t1: " + displayInventoryItem(0) + "\n"; // fill in, list item in inventory
+    b = "\t2: " + displayInventoryItem(1) + "\n"; // fill in, list item in inventory
+    c = "\t3: " + displayInventoryItem(2) + "\n"; // fill in, list item in inventory
+    d = "\t4: " + displayInventoryItem(3) + "\n"; // fill in, list item in inventory
     f = "\t5: Exit Shop \n";
     g = "\t6: Back\n";
     h = "Selection: \n";

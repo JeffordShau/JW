@@ -14,8 +14,12 @@ public class Protagonist extends Character {
     return gems;
   }
 
-  public void addGems(int randGems) {
-    gems += randGems;
+  public void addGems(int addGems) {
+    gems += addGems;
+  }
+
+  public void removeGems(int removeGems) {
+    gems += removeGems;
   }
 
   public void getHeal() {
