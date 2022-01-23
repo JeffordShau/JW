@@ -76,3 +76,10 @@ William Vongphanith :: Added packages
 Jefford Shau :: Updated devlog.txt and flowchart
 William Vongphanith :: Fixed compile errors
 ==============================================================
+
+2022-01-22
+--------------------------------------------------------------
+Jefford Shau :: Added sell interface and buy interface
+==============================================================
+
+WILL EDIT THIS AND MAKE IT MORE DETAILED WHEN CODING DONE
