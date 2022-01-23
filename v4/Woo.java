@@ -23,8 +23,9 @@ public class Woo {
   private BufferedReader in;
 
   // total items arraylist
-  private ArrayList<Item> items = new ArrayList<Item>();
-  private ArrayList<Item> buyShop = new ArrayList<Item>();
+  private ArrayList<Item> items = new ArrayList<>();
+  private ArrayList<Item> buyShop = new ArrayList<>();
+  private ArrayList<Item> inventory = new ArrayList<>();
   // default constructor
   public Woo() {
     isr = new InputStreamReader( System.in );
@@ -60,33 +61,33 @@ public class Woo {
     }
     if (playerChoice == 1) {
       pat = new Rogue(name);
-      Item bracelet_of_life = items.Bracelet("Bracelet of Life", nextitemId, "A legendary healing bracelet", 100, 1);
+      Item bracelet_of_life = new Bracelet("Bracelet of Life", nextitemId, "A legendary healing bracelet", 100, 1);
       items.add(bracelet_of_life);
       nextitemId += 1;
     } else if (playerChoice == 2) {
       pat = new Warrior(name);
-      Item bracelet_of_strength = items.Bracelet("Bracelet of Strength", nextitemId, "A legendary strenth bracelet", 100, 1);
+      Item bracelet_of_strength = new Bracelet("Bracelet of Strength", nextitemId, "A legendary strenth bracelet", 100, 1);
       items.add(bracelet_of_strength);
       nextitemId += 1;
     } else if (playerChoice == 3) {
       pat = new Assassin(name);
-      Item bracelet_of_stealth = items.Bracelet("Bracelet of Stealth", nextitemId, "A legendary speed bracelet", 100, 1);
+      Item bracelet_of_stealth = new Bracelet("Bracelet of Stealth", nextitemId, "A legendary speed bracelet", 100, 1);
       items.add(bracelet_of_stealth);
       nextitemId += 1;
     } else if (playerChoice == 4) {
       pat = new Thief(name);
-      Item bracelet_of_wealth = items.Bracelet("Bracelet of Wealth", nextitemId, "A legendary wealth bracelet", 100, 1);
+      Item bracelet_of_wealth = new Bracelet("Bracelet of Wealth", nextitemId, "A legendary wealth bracelet", 100, 1);
       items.add(bracelet_of_wealth);
       nextitemId += 1;
     } else if (playerChoice == 5) {
       pat = new Cursed_Hero(name);
-      Item bracelet_of_poison = items.Bracelet("Bracelet of Poison", nextitemId, "An unremovable cursed bracelet", 100, 1);
+      Item bracelet_of_poison = new Bracelet("Bracelet of Poison", nextitemId, "An unremovable cursed bracelet", 100, 1);
       items.add(bracelet_of_poison);
       nextitemId += 1;
     } else {
       System.out.println("Hero unidentified. The easiest difficulty has been selected.");
       pat = new Rogue(name);
-      Item bracelet_of_life = Bracelet("Bracelet of Life", nextitemId, "A legendary healing bracelet", 100, 1);
+      Item bracelet_of_life = new Bracelet("Bracelet of Life", nextitemId, "A legendary healing bracelet", 100, 1);
       items.add(bracelet_of_life);
       nextitemId += 1;
     }
