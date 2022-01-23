@@ -25,6 +25,7 @@ public class Woo {
   private ArrayList<Item> items = new ArrayList<Item>();
   private ArrayList<Item> buyShop = new ArrayList<Item>();
   private ArrayList<Item> inventory = new ArrayList<Item>();
+  private ArrayList<Integer> issaSword = new ArrayList<Integer>();
 
   // default constructor
   public Woo() {
@@ -205,7 +206,7 @@ public class Woo {
       // daily bracelet of death effect
       if (inventory.get(0).getName() == "Bracelet of Death") {
         System.out.println("Your Bracelet of Death is eating away at your health!");
-        pat.subtractHeatlh(1);
+        pat.subtractHealth(1);
         if (pat.isAlive()) {
           return true;
         }
@@ -302,54 +303,93 @@ public class Woo {
         smaug = new Slug("Giant Slug", 4, 6, 0);
       }
     }
-    System.out.println( "You are fighting a " + smaug.getName());
+    System.out.println( "You are fighting a " + smaug.getName() + "\nHealth: " + smaug.getHealth() + "\tAttack: " + smaug.getAttack() + "\tDefense: " + smaug.getDefense() );
 
     // fighting with turns
     while( smaug.isAlive() && pat.isAlive() ) {
       System.out.println( "\nWhat is your choice?" );
-      System.out.println( "\t1: Attack\n\t2: Flee\nSelection: " );
+      System.out.println( "\t1: Attack\n\t2: Use Item\n\t3: Flee\nSelection: " );
       try {
         i = Integer.parseInt( in.readLine() );
       }
       catch ( IOException e ) { }
-      int order = (int) (Math.random() * 2);
+      int itemChoice = 1;
+      int weaponCount = 3;
       if ( i == 1 ) {
-
-
-
-
-        int first, second;
-        if (order == 0) {
-          first = pat.attack( smaug );
-          System.out.println( "\n" + pat.getName() + " dealt " + first + " damage.");
-          System.out.println("\nMonster health: " + smaug.getHealth());
-          second = smaug.attack( pat );
-          System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + second + " points of damage.");
-          System.out.println("\nYe health: " + pat.getHealth());
+        String s = "\nWhich weapon will you use?\n";
+        s += "\t1: Back\n";
+        s += "\t2: Fist\tPower: 1\n";
+        for (int j = 1; j <= inventory.size(); j++) {
+          if (inventory.get(j) instanceof Sword) {
+            issaSword.add(j); // adds inventory index
+            s += "\t" + weaponCount + ": " + displayInventoryItem(j) + "\n";
+            weaponCount += 1;
+          }
         }
-        else if (order == 1) {
-          second = smaug.attack( pat );
-          System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + second + " points of damage.");
-          System.out.println("\nYe health: " + pat.getHealth());
-          first = pat.attack( smaug );
-          System.out.println( "\n" + pat.getName() + " dealt " + first + " points of damage.");
-          System.out.println("\nMonster health: " + smaug.getHealth());
+        s += "Selection: ";
+        System.out.print( s );
+        try {
+          itemChoice = Integer.parseInt( in.readLine() );
+        }
+        catch (IOException e) { }
+        if (itemChoice == 1) {
+          return;
+        }
+        else if (itemChoice == 2) {
+          attack(0);
+        }
+        else if (itemChoice > 2 && itemChoice < 6) {
+          attack(inventory.get(issaSword.get(itemChoice - 3)).getPower()); // deal damage
+          // useItem(inventory.get(issaSword.get(itemChoice - 3)); // reduce durability
         }
       }
       else if ( i == 2 ) {
-        if (order == 0) {
-          System.out.println("The " + smaug.getName() + " swings down on you, but you quickly dodge to the side. You escape in time before the " + smaug.getName() + "can land another attack.");
+
+      }
+      else if ( i == 3 ) {
+        int fleeChance = (int) (Math.random() * 2);
+        if (fleeChance == 0) {
+          System.out.println("The " + smaug.getName() + " swings down on you, but you quickly dodge to the side. You escape in time before the " + smaug.getName() + "can land another hit.");
           return;
         }
         else {
           System.out.println("You begin to escape, but the " + smaug.getName() + " slashes down at you one time and lands a hit before you escape.");
-          int fleeDmg = smaug.attack( pat );
-          System.out.println( "The " + smaug.getName() + "smacked " + pat.getName() + " for " + fleeDmg + " damage.");
+          System.out.println( "The " + smaug.getName() + "smacked " + pat.getName() + " for " + characterAttack(smaug, pat, 1, 0) + " damage.");
           System.out.println(pat.getName() + " health: " + pat.getHealth());
           return;
         }
       }
     }
+  }
+
+  public void attack(int itemPower) {
+    int damageMulti = 1;
+    int attackOrder = (int) (Math.random() * 7);
+    // bracelet of stealth effects
+    if ((inventory.get(0).getName() == "Bracelet of Strength") && (days % 4 == 0)) {
+      damageMulti = 2;
+    }
+    if (inventory.get(0).getName() == "Bracelet of Stealth") {
+      characterAttack(pat, smaug, damageMulti, itemPower);
+      characterAttack(smaug, pat, damageMulti, itemPower);
+    }
+    else if (attackOrder < 3) {
+      characterAttack(smaug, pat, damageMulti, itemPower);
+      characterAttack(pat, smaug, damageMulti, itemPower);
+    }
+    else {
+      characterAttack(pat, smaug, damageMulti, itemPower);
+      characterAttack(smaug, pat, damageMulti, itemPower);
+    }
+  }
+
+  public int characterAttack(Character attacker, Character attacked, int damageMulti, int itemPower) {
+    int totalDamage = (attacker.getAttack() + itemPower) * damageMulti;
+    int damage = totalDamage - attacked.getDefense();
+    attacked.subtractHealth(damage);
+    System.out.println( "\n" + attacker.getName() + " dealt " + damage + " damage.");
+    System.out.println(attacked.getName() + "\tHealth: " + attacked.getHealth() + "\tAttack: " + attacked.getAttack() + "\tDefense: " + attacked.getDefense() );
+    return damage;
   }
 
   // shop interface
@@ -464,7 +504,7 @@ public class Woo {
     else if (days < 30) {
       sellPrice = 60;
     }
-    s = "\nAnything that will help you on your journey?";
+    s = "\nAnything that will help you on your journey?\n";
     s += "\t1: " + displayInventoryItem(1) + "\tSell Price: " + (sellPrice * inventory.get(1).getDurability()) + "\n";
     s += "\t2: " + displayInventoryItem(2) + "\tSell Price: " + (sellPrice * inventory.get(2).getDurability()) + "\n";
     s += "\t3: " + displayInventoryItem(3) + "\tSell Price: " + (sellPrice * inventory.get(2).getDurability()) + "\n";

@@ -45,17 +45,7 @@ public class Character {
     health += value;
   }
 
-  public void subtractHeatlh(int value) {
+  public void subtractHealth(int value) {
     health -= value;
-  }
-
-  public int attack (Character attacked) {
-    int totalDamage = baseDamage - attacked.getDefense();
-    return attacked.reduceHealth(totalDamage);
-  }
-
-  public int reduceHealth(int damage) {
-    health -= damage;
-    return damage;
   }
 }
