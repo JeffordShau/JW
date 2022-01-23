@@ -2,8 +2,8 @@
 
 public class Cursed_Hero extends Protagonist {
 
-  public Cursed_Hero(String name) {
-    super(name);
+  public Cursed_Hero(String newName, int newHealth, int newBaseDamage, int newDefense) {
+    super(newName, newHealth, newBaseDamage, newDefense);
   }
 
   public static String about() {

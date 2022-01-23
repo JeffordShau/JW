@@ -2,8 +2,8 @@
 
 public class Thief extends Protagonist {
 
-  public Thief(String name) {
-    super(name);
+  public Thief(String newName, int newHealth, int newBaseDamage, int newDefense) {
+    super(newName, newHealth, newBaseDamage, newDefense);
   }
 
   public static String about() {

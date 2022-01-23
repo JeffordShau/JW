@@ -1,13 +1,9 @@
 // package characters;
 
 public class Crow extends Monster {
-  public int _health;
-  public int _baseDamage;
 
-  public Crow() {
-    super();
-    _health = 4;
-    _baseDamage = 4;
+  public Crow(String newName, int newHealth, int newBaseDamage, int newDefense) {
+    super(newName, newHealth, newBaseDamage, newDefense);
   }
 
   public String getRole () {

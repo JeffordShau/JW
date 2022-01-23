@@ -7,21 +7,18 @@ public class Character {
   protected int health;
   protected int baseDamage;
   protected int defense;
-  protected int damageMulti;
 
   public Character() {
     health = 4;
     baseDamage = 3;
     defense = 0;
-    damageMulti = 1;
   }
 
-  public Character(String newName, int newHealth, int newBaseDamage, int newDefense, int newDamageMulti) {
+  public Character(String newName, int newHealth, int newBaseDamage, int newDefense) {
     name = newName;
     health = newHealth;
     baseDamage =  newBaseDamage;
     defense = newDefense;
-    damageMulti = newDamageMulti;
   }
 
   public String getName() {
@@ -48,13 +45,12 @@ public class Character {
     health += value;
   }
 
+  public void subtractHeatlh(int value) {
+    health -= value;
+  }
+
   public int attack (Character attacked) {
-    int totalDamage = 0;
-    if (damageMulti != 1) {
-      totalDamage = baseDamage * damageMulti - attacked.getDefense();
-      return attacked.reduceHealth(totalDamage);
-    }
-    totalDamage = baseDamage - attacked.getDefense();
+    int totalDamage = baseDamage - attacked.getDefense();
     return attacked.reduceHealth(totalDamage);
   }
 

@@ -2,8 +2,8 @@
 
 public class Rogue extends Protagonist {
 
-  public Rogue(String name) {
-    super(name);
+  public Rogue(String newName, int newHealth, int newBaseDamage, int newDefense) {
+    super(newName, newHealth, newBaseDamage, newDefense);
   }
 
   public static String about() {

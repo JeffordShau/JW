@@ -8,8 +8,8 @@ public class Protagonist extends Character {
     gems = 0;
   }
 
-  public Protagonist(String newName, int newHealth, int newBaseDamage, int newDefense, int newDamageMulti) {
-    super(newName, newHealth, newBaseDamage, newDefense,newDamageMulti);
+  public Protagonist(String newName, int newHealth, int newBaseDamage, int newDefense) {
+    super(newName, newHealth, newBaseDamage, newDefense);
     gems = 0;
   }
 

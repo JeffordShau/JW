@@ -1,17 +1,9 @@
 //package characters;
 
 public class Blob extends Monster {
-  public int _health;
-  public int _baseDamage;
 
-  public static String about() {
-    return "who is looking for some food.";
-  }
-
-  public Blob() {
-    super();
-    _health = 6;
-    _baseDamage = 4;
+  public Blob(String newName, int newHealth, int newBaseDamage, int newDefense) {
+    super(newName, newHealth, newBaseDamage, newDefense);
   }
 
   public String getRole () {

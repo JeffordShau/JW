@@ -2,8 +2,8 @@
 
 public class Warrior extends Protagonist {
 
-  public Warrior(String name) {
-    super(name);
+  public Warrior(String newName, int newHealth, int newBaseDamage, int newDefense) {
+    super(newName, newHealth, newBaseDamage, newDefense);
   }
 
   public static String about() {

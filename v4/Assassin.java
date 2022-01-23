@@ -2,8 +2,8 @@
 
 public class Assassin extends Protagonist {
 
-  public Assassin(String name) {
-    super(name);
+  public Assassin(String newName, int newHealth, int newBaseDamage, int newDefense) {
+    super(newName, newHealth, newBaseDamage, newDefense);
   }
 
   public static String about() {

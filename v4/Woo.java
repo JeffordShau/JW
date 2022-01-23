@@ -22,9 +22,9 @@ public class Woo {
   private InputStreamReader isr;
   private BufferedReader in;
 
-  private ArrayList<Item> items = new ArrayList<>();
-  private ArrayList<Item> buyShop = new ArrayList<>();
-  private ArrayList<Item> inventory = new ArrayList<>();
+  private ArrayList<Item> items = new ArrayList<Item>();
+  private ArrayList<Item> buyShop = new ArrayList<Item>();
+  private ArrayList<Item> inventory = new ArrayList<Item>();
 
   // default constructor
   public Woo() {
@@ -40,10 +40,10 @@ public class Woo {
     int playerChoice = 0;
     s = "The Hero has arrived!";
     s += "\nChoose your hero: \n";
-    s += "\t1: Easy: \n\tRogue: " + Rogue.about() + "\n";
-    s += "\t2: Normal: \n\tWarrior: " + Warrior.about() + "\n";
-    s += "\t3: Hard: \n\tAssassin: " + Assassin.about() + "\n";
-    s += "\t4: Very Hard: \n\tThief: " + Thief.about() + "\n";
+    s += "\t1: Easy: \n\tRogue: " + Rogue.about() + "\n\n";
+    s += "\t2: Normal: \n\tWarrior: " + Warrior.about() + "\n\n";
+    s += "\t3: Hard: \n\tAssassin: " + Assassin.about() + "\n\n";
+    s += "\t4: Very Hard: \n\tThief: " + Thief.about() + "\n\n";
     s += "\t5: Impossible: \n\tCursed Hero: " + Cursed_Hero.about() + "\n";
     s += "Selection: ";
     System.out.print( s );
@@ -60,38 +60,38 @@ public class Woo {
       System.out.println( "Error reading name. " );
     }
     if (playerChoice == 1) {
-      pat = new Rogue(name);
+      pat = new Rogue(name, 20, 1, 0);
       Item bracelet_of_life = new Bracelet("Bracelet of Life", nextitemId, "A legendary healing bracelet", 100, 1);
       items.add(bracelet_of_life);
       inventory.add(bracelet_of_life);
       nextitemId += 1;
     } else if (playerChoice == 2) {
-      pat = new Warrior(name);
+      pat = new Warrior(name, 20, 1, 0);
       Item bracelet_of_strength = new Bracelet("Bracelet of Strength", nextitemId, "A legendary strenth bracelet", 10, 1);
       items.add(bracelet_of_strength);
       inventory.add(bracelet_of_strength);
       nextitemId += 1;
     } else if (playerChoice == 3) {
-      pat = new Assassin(name);
+      pat = new Assassin(name, 20, 1, 0);
       Item bracelet_of_stealth = new Bracelet("Bracelet of Stealth", nextitemId, "A legendary speed bracelet", 10, 1);
       items.add(bracelet_of_stealth);
       inventory.add(bracelet_of_stealth);
       nextitemId += 1;
     } else if (playerChoice == 4) {
-      pat = new Thief(name);
+      pat = new Thief(name, 20, 1, 0);
       Item bracelet_of_wealth = new Bracelet("Bracelet of Wealth", nextitemId, "A legendary wealth bracelet", 10, 1);
       items.add(bracelet_of_wealth);
       inventory.add(bracelet_of_wealth);
       nextitemId += 1;
     } else if (playerChoice == 5) {
-      pat = new Cursed_Hero(name);
-      Item bracelet_of_poison = new Bracelet("Bracelet of Poison", nextitemId, "An unremovable cursed bracelet", 10, 1);
-      items.add(bracelet_of_poison);
-      inventory.add(bracelet_of_poison);
+      pat = new Cursed_Hero(name, 20, 1, 0);
+      Item bracelet_of_death = new Bracelet("Bracelet of Death", nextitemId, "An unremovable cursed bracelet", 10, 1);
+      items.add(bracelet_of_death);
+      inventory.add(bracelet_of_death);
       nextitemId += 1;
     } else {
       System.out.println("Hero unidentified. The easiest difficulty has been selected.");
-      pat = new Rogue(name);
+      pat = new Rogue(name, 20, 1, 0);
       Item bracelet_of_life = new Bracelet("Bracelet of Life", nextitemId, "A legendary healing bracelet", 10, 1);
       items.add(bracelet_of_life);
       inventory.add(bracelet_of_life);
@@ -103,6 +103,7 @@ public class Woo {
   public boolean Turn() {
     String s;
     if (pat.isAlive()) {
+      // daily bracelet of life effect
       if (inventory.get(0).getName() == "Bracelet of Life") {
         if (pat.getHealth() < 20) {
           System.out.println("Your Bracelet of Life healed you for 1 hp!");
@@ -132,6 +133,7 @@ public class Woo {
           s += "\t1: Search for monsters\n";
           s += "\t2: Use Item\n";
           s += "\t3: Sleep\n";
+          s += "Selection: ";
           int turnChoice = 0;
           System.out.println(s);
           try {
@@ -193,6 +195,21 @@ public class Woo {
       else if (days % 7 == 0) {
         System.out.println("As you walk forward, you see a merchant ahead of you.");
         shop();
+      }
+      // daily bracelet of wealth effect
+      if (inventory.get(0).getName() == "Bracelet of Wealth") {
+        int wealth = (int) (Math.random() * 4);
+        System.out.println("Your Bracelet of Wealth has given you gems!");
+        pat.addGems(wealth);
+      }
+      // daily bracelet of death effect
+      if (inventory.get(0).getName() == "Bracelet of Death") {
+        System.out.println("Your Bracelet of Death is eating away at your health!");
+        pat.subtractHeatlh(1);
+        if (pat.isAlive()) {
+          return true;
+        }
+        return false;
       }
       return true;
     }
@@ -270,33 +287,39 @@ public class Woo {
 
   public void battleMonster() {
     int i = 1;
-
     if (days < 10) {
-      int monsterChoice = (int) (Math.random() * 2);
+      int monsterChoice = (int) (Math.random() * 4);
       if (monsterChoice == 0) {
-        smaug = new Rat();
+        smaug = new Rat("Big Rat", 4, 4, 0);
       }
       else if (monsterChoice == 1) {
-        smaug = new Blob();
+        smaug = new Blob("Blob", 6, 3, 0);
       }
       else if (monsterChoice == 2) {
-        smaug = new Crow();
+        smaug = new Crow("Crow", 6, 4, 0);
+      }
+      else if (monsterChoice == 3) {
+        smaug = new Slug("Giant Slug", 4, 6, 0);
       }
     }
-    System.out.println( "You are fighting the " + smaug.getRole() + "" + smaug.getName());
+    System.out.println( "You are fighting a " + smaug.getName());
 
     // fighting with turns
     while( smaug.isAlive() && pat.isAlive() ) {
       System.out.println( "\nWhat is your choice?" );
-      System.out.println( "\t1: Attack.\n\t2: Use item.\n\t3: Flee." );
+      System.out.println( "\t1: Attack\n\t2: Flee\nSelection: " );
       try {
         i = Integer.parseInt( in.readLine() );
       }
       catch ( IOException e ) { }
+      int order = (int) (Math.random() * 2);
       if ( i == 1 ) {
-        int order = (int) (Math.random() * 2);
+
+
+
+
+        int first, second;
         if (order == 0) {
-          int first, second;
           first = pat.attack( smaug );
           System.out.println( "\n" + pat.getName() + " dealt " + first + " damage.");
           System.out.println("\nMonster health: " + smaug.getHealth());
@@ -305,7 +328,6 @@ public class Woo {
           System.out.println("\nYe health: " + pat.getHealth());
         }
         else if (order == 1) {
-          int first, second;
           second = smaug.attack( pat );
           System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + second + " points of damage.");
           System.out.println("\nYe health: " + pat.getHealth());
@@ -315,14 +337,17 @@ public class Woo {
         }
       }
       else if ( i == 2 ) {
-        // use item
-      }
-      else if ( i == 3 ) {
-        System.out.println("You begin to escape, but the monster slashes at you one time before you escape.");
-        int fleeDmg = smaug.attack( pat );
-        System.out.println( "\n" + "Monster smacked " + pat.getName() + " for " + fleeDmg + " points of damage.");
-        System.out.println("\nYe health: " + pat.getHealth());
-        return;
+        if (order == 0) {
+          System.out.println("The " + smaug.getName() + " swings down on you, but you quickly dodge to the side. You escape in time before the " + smaug.getName() + "can land another attack.");
+          return;
+        }
+        else {
+          System.out.println("You begin to escape, but the " + smaug.getName() + " slashes down at you one time and lands a hit before you escape.");
+          int fleeDmg = smaug.attack( pat );
+          System.out.println( "The " + smaug.getName() + "smacked " + pat.getName() + " for " + fleeDmg + " damage.");
+          System.out.println(pat.getName() + " health: " + pat.getHealth());
+          return;
+        }
       }
     }
   }
