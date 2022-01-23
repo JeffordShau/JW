@@ -67,32 +67,32 @@ public class Woo {
       nextitemId += 1;
     } else if (playerChoice == 2) {
       pat = new Warrior(name);
-      Item bracelet_of_strength = new Bracelet("Bracelet of Strength", nextitemId, "A legendary strenth bracelet", 100, 1);
+      Item bracelet_of_strength = new Bracelet("Bracelet of Strength", nextitemId, "A legendary strenth bracelet", 10, 1);
       items.add(bracelet_of_strength);
       inventory.add(bracelet_of_strength);
       nextitemId += 1;
     } else if (playerChoice == 3) {
       pat = new Assassin(name);
-      Item bracelet_of_stealth = new Bracelet("Bracelet of Stealth", nextitemId, "A legendary speed bracelet", 100, 1);
+      Item bracelet_of_stealth = new Bracelet("Bracelet of Stealth", nextitemId, "A legendary speed bracelet", 10, 1);
       items.add(bracelet_of_stealth);
       inventory.add(bracelet_of_stealth);
       nextitemId += 1;
     } else if (playerChoice == 4) {
       pat = new Thief(name);
-      Item bracelet_of_wealth = new Bracelet("Bracelet of Wealth", nextitemId, "A legendary wealth bracelet", 100, 1);
+      Item bracelet_of_wealth = new Bracelet("Bracelet of Wealth", nextitemId, "A legendary wealth bracelet", 10, 1);
       items.add(bracelet_of_wealth);
       inventory.add(bracelet_of_wealth);
       nextitemId += 1;
     } else if (playerChoice == 5) {
       pat = new Cursed_Hero(name);
-      Item bracelet_of_poison = new Bracelet("Bracelet of Poison", nextitemId, "An unremovable cursed bracelet", 100, 1);
+      Item bracelet_of_poison = new Bracelet("Bracelet of Poison", nextitemId, "An unremovable cursed bracelet", 10, 1);
       items.add(bracelet_of_poison);
       inventory.add(bracelet_of_poison);
       nextitemId += 1;
     } else {
       System.out.println("Hero unidentified. The easiest difficulty has been selected.");
       pat = new Rogue(name);
-      Item bracelet_of_life = new Bracelet("Bracelet of Life", nextitemId, "A legendary healing bracelet", 100, 1);
+      Item bracelet_of_life = new Bracelet("Bracelet of Life", nextitemId, "A legendary healing bracelet", 10, 1);
       items.add(bracelet_of_life);
       inventory.add(bracelet_of_life);
       nextitemId += 1;
@@ -103,7 +103,7 @@ public class Woo {
   public boolean Turn() {
     String s;
     if (pat.isAlive()) {
-      if (pat.getRole() == "Rogue") { //change to if bracelet of life in inventory
+      if (inventory.get(0).getName() == "Bracelet of Life") {
         if (pat.getHealth() < 20) {
           System.out.println("Your Bracelet of Life healed you for 1 hp!");
           pat.addHealth(1);
@@ -270,24 +270,20 @@ public class Woo {
 
   public void battleMonster() {
     int i = 1;
-    String aboutDescrip = "";
 
     if (days < 10) {
       int monsterChoice = (int) (Math.random() * 2);
       if (monsterChoice == 0) {
         smaug = new Rat();
-        aboutDescrip = Rat.about();
       }
       else if (monsterChoice == 1) {
         smaug = new Blob();
-        aboutDescrip = Blob.about();
       }
       else if (monsterChoice == 2) {
         smaug = new Crow();
-        aboutDescrip = Crow.about();
       }
     }
-    System.out.println( "You are fighting a " + smaug.getRole() + ", " + aboutDescrip);
+    System.out.println( "You are fighting the " + smaug.getRole() + "" + smaug.getName());
 
     // fighting with turns
     while( smaug.isAlive() && pat.isAlive() ) {

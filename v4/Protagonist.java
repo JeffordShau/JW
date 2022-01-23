@@ -1,13 +1,16 @@
 // package characters;
 
 public class Protagonist extends Character {
+  public int gems;
 
   public Protagonist() {
     super();
+    gems = 0;
   }
 
-  public Protagonist(String name) {
-    super(name);
+  public Protagonist(String newName, int newHealth, int newBaseDamage, int newDefense, int newDamageMulti) {
+    super(newName, newHealth, newBaseDamage, newDefense,newDamageMulti);
+    gems = 0;
   }
 
   public int getGems() {
@@ -22,19 +25,7 @@ public class Protagonist extends Character {
     gems += removeGems;
   }
 
-  public void getHeal() {
-    health += 5;
-  }
-
-  public String getRole () {
-    return "Protagonist";
-  }
-
   public String getName () {
     return name;
-  }
-
-  public boolean isAlive() {
-    return health > 0;
   }
 }
