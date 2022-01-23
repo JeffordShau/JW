@@ -6,8 +6,8 @@ public class Bracelet extends Item {
         super();
     }
 
-    public Bracelet(String name, int id, String description, int durability, int power) {
-        super(name, id, description, durability, power);
+    public Bracelet (String name, int itemId, String itemDescription, int durability, int power) {
+        super(name, itemId, itemDescription, durability, power);
     }
 
 }

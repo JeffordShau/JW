@@ -8,8 +8,8 @@ public class Shield extends Item {
         super();
     }
 
-    public Shield (String name, int id, String description, int durability, int power) {
-        super();
+    public Shield (String name, int itemId, String itemDescription, int durability, int power) {
+        super(name, itemId, itemDescription, durability, power);
     }
 
     public int use () {

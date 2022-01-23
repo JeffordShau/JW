@@ -5,8 +5,8 @@ FP -- Show Us What You Got
 2022-01-21
 */
 
-import characters.*;
-import items.*;
+// import characters.*;
+// import items.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Woo {
   private final static int maxDays = 30; // set the max number of days
   private static int days = 1;
-  private int nextitemId = 3;
+  private int nextitemId = 0;
   // Instance variables
   private Protagonist pat;
   private Monster smaug;
@@ -22,10 +22,10 @@ public class Woo {
   private InputStreamReader isr;
   private BufferedReader in;
 
-  // total items arraylist
   private ArrayList<Item> items = new ArrayList<>();
   private ArrayList<Item> buyShop = new ArrayList<>();
   private ArrayList<Item> inventory = new ArrayList<>();
+
   // default constructor
   public Woo() {
     isr = new InputStreamReader( System.in );
@@ -63,32 +63,38 @@ public class Woo {
       pat = new Rogue(name);
       Item bracelet_of_life = new Bracelet("Bracelet of Life", nextitemId, "A legendary healing bracelet", 100, 1);
       items.add(bracelet_of_life);
+      inventory.add(bracelet_of_life);
       nextitemId += 1;
     } else if (playerChoice == 2) {
       pat = new Warrior(name);
       Item bracelet_of_strength = new Bracelet("Bracelet of Strength", nextitemId, "A legendary strenth bracelet", 100, 1);
       items.add(bracelet_of_strength);
+      inventory.add(bracelet_of_strength);
       nextitemId += 1;
     } else if (playerChoice == 3) {
       pat = new Assassin(name);
       Item bracelet_of_stealth = new Bracelet("Bracelet of Stealth", nextitemId, "A legendary speed bracelet", 100, 1);
       items.add(bracelet_of_stealth);
+      inventory.add(bracelet_of_stealth);
       nextitemId += 1;
     } else if (playerChoice == 4) {
       pat = new Thief(name);
       Item bracelet_of_wealth = new Bracelet("Bracelet of Wealth", nextitemId, "A legendary wealth bracelet", 100, 1);
       items.add(bracelet_of_wealth);
+      inventory.add(bracelet_of_wealth);
       nextitemId += 1;
     } else if (playerChoice == 5) {
       pat = new Cursed_Hero(name);
       Item bracelet_of_poison = new Bracelet("Bracelet of Poison", nextitemId, "An unremovable cursed bracelet", 100, 1);
       items.add(bracelet_of_poison);
+      inventory.add(bracelet_of_poison);
       nextitemId += 1;
     } else {
       System.out.println("Hero unidentified. The easiest difficulty has been selected.");
       pat = new Rogue(name);
       Item bracelet_of_life = new Bracelet("Bracelet of Life", nextitemId, "A legendary healing bracelet", 100, 1);
       items.add(bracelet_of_life);
+      inventory.add(bracelet_of_life);
       nextitemId += 1;
     }
   } // end newGame
@@ -97,19 +103,19 @@ public class Woo {
   public boolean Turn() {
     String s;
     if (pat.isAlive()) {
-      if (pat.getRole() == "Rogue") {
+      if (pat.getRole() == "Rogue") { //change to if bracelet of life in inventory
         if (pat.getHealth() < 20) {
           System.out.println("Your Bracelet of Life healed you for 1 hp!");
           pat.addHealth(1);
         }
       }
       System.out.println("Day " + days + "\tHealth: " + pat.getHealth() + "\tAttack: " + pat.getAttack() + "\tDefense: " + pat.getDefense() + "\tGems: " + pat.getGems());
-      int randGems = 0;
       // randomly assigns the stage depending on day number
       if (days % 7 != 0 && days != maxDays) {
         int stageSel = (int) (Math.random() * 10);
         // receives a few gems, has a choice on next action
         if (stageSel < 2) {
+          int randGems = 0;
           if (days < 10) {
             randGems = (int) (Math.random() * 10);
           }
@@ -149,28 +155,28 @@ public class Woo {
           battleMonster();
         }
         // random item drop
-        else if (stageSel < 10) {
-          int itemIdx = (int) (Math.random() * items.length);
-          System.out.println("You found a " + items[itemIdx] + "!");
-          if (pat.inventorySize() < 4) {
-            // Item foundItem = items[itemIdx];
-            // int randDur = ((int) Math.random() * 50) * 2;
-            // foundItem.setDurability(randDur);
-            // pat.addItem(foundItem);
-          }
-          else {
-            System.out.println("Your inventory is full. You must drop an item to pick one up. What is your choice?");
-            int itemToDrop = 1;
-            try {
-              itemToDrop = Integer.parseInt(in.readLine());
-              pat.removeItem(pat.findById(itemToDrop));
-              pat.addItem(items[itemIdx]);
-            }
-            catch (IOException e) {
-              System.out.println("You did not enter a valid item name. You were unable to pick up the item.");
-            }
-          }
-        }
+        // else if (stageSel < 10) {
+        //   int itemIdx = (int) (Math.random() * items.length);
+        //   System.out.println("You found a " + items[itemIdx] + "!");
+        //   if (pat.inventorySize() < 4) {
+        //     Item foundItem = items[itemIdx];
+        //     int randDur = ((int) Math.random() * 50) * 2;
+        //     foundItem.setDurability(randDur);
+        //     pat.addItem(foundItem);
+        //   }
+        //   else {
+        //     System.out.println("Your inventory is full. You must drop an item to pick one up. What is your choice?");
+        //     int itemToDrop = 1;
+        //     try {
+        //       itemToDrop = Integer.parseInt(in.readLine());
+        //       pat.removeItem(pat.findById(itemToDrop));
+        //       pat.addItem(items[itemIdx]);
+        //     }
+        //     catch (IOException e) {
+        //       System.out.println("You did not enter a valid item name. You were unable to pick up the item.");
+        //     }
+        //   }
+        // }
       }
       // final boss
       else if (days == maxDays) {
@@ -189,32 +195,22 @@ public class Woo {
     }
   }
 
+  // display shop item
   public String displayBuyItem (int idx) {
     String s = "";
-    s = buyShop[idx].getName();
-    s += "\tDurability: " + buyShop[idx].getDurability();
-    s += "\tPower: " + buyShop[idx].getPower();
+    s = buyShop.get(idx).getName();
+    s += "\tDurability: " + buyShop.get(idx).getDurability();
+    s += "\tPower: " + buyShop.get(idx).getPower();
     return s;
   }
 
+  //display inventory item
   public String displayInventoryItem (int idx) {
-    Item displayItem = pat.getInventoryIdx(idx);
-    String t = "";
-    int sellPrice = 0;
-    if (days < 10) {
-      sellPrice = 20 * displayItem.getDurability();
-    }
-    else if (days < 20) {
-      sellPrice = 40 * displayItem.getDurability();
-    }
-    else if (days < 30) {
-      sellPrice = 60 * displayItem.getDurability();
-    }
-    t = displayItem.getName();
-    t += "\tDurability: " + displayItem.getDurability();
-    t += "\tPower: " + displayItem.getPower();
-    t += "\tSell Price: " + sellPrice; // adjust this
-    return t;
+    String s = "";
+    s = inventory.get(idx).getName();
+    s += "\tDurability: " + inventory.get(idx).getDurability();
+    s += "\tPower: " + inventory.get(idx).getPower();
+    return s;
   }
 
   public Item createItem (String name, int id, String type, String description, int durability, int power) {
@@ -224,6 +220,10 @@ public class Woo {
     }
     else if (type == "sword") {
       Item newitem = new Sword(name, id, description, durability, power);
+      return newitem;
+    }
+    else if (type == "potion") {
+      Item newitem = new Potion(name, id, description, durability, power);
       return newitem;
     }
     Item newitem = new Item();
@@ -300,8 +300,7 @@ public class Woo {
   public void shop() {
     String s;
     int shopChoice = 0;
-    ArrayList<Item> totalItems = new ArrayList<Item>();
-    s = "Hero welcome to the shop! Would you ilke to: \n";
+    s = "Hero welcome to the shop! Would you ilke to:\n";
     s += "\t1: Buy\n";
     s += "\t2: Sell\n";
     s += "\t3: Exit Shop\n";
@@ -338,19 +337,22 @@ public class Woo {
     }
     buyShop.clear();
     for (int i = 0; i < 3; i++) {
+      Item shopItem = createItem("", 0, "", "", 0, 0);
       if (randBuyItems == 0) {
-        Item buyItem = createItem("Rusty Dagger", nextitemId, "sword", "", 100, 3);
+        shopItem = createItem("Rusty Dagger", nextitemId, "sword", "", 100, 3);
       }
       else if (randBuyItems == 1) {
-        Item buyItem = createItem("Wooden Shield", nextitemId, "shield", "", 100, 1);
+        shopItem = createItem("Wooden Shield", nextitemId, "shield", "", 100, 1);
       }
-      buyShop.add(buyItem);
-      nextitemId += 1;
+      else if (randBuyItems == 2) {
+        shopItem = createItem("Potion of Health", nextitemId, "potion", "", 100, 1);
+      }
+      buyShop.add(shopItem);
     }
     s = "\nAnything that will help you on your journey?";
-    s += "\t1: " + displayBuyItem(0) + "\n"; // fill in
-    s += "\t2: " + displayBuyItem(1) + "\n"; // fill in
-    s += "\t3: " + displayBuyItem(2) + "\n"; // fill in
+    s += "\t1: " + displayBuyItem(0) + "\tBuy Price: "+ buyPrice + "\n";
+    s += "\t2: " + displayBuyItem(1) + "\tBuy Price: "+ buyPrice + "\n";
+    s += "\t3: " + displayBuyItem(2) + "\tBuy Price: "+ buyPrice + "\n";
     s += "\t4: Exit Shop\n";
     s += "\t5: Back\n";
     s += "Selection: ";
@@ -358,18 +360,21 @@ public class Woo {
     try {
       buyChoice = Integer.parseInt( in.readLine() );
     }
-    catch (IOException e) { }
+    catch (IOException e) { System.out.println("Sorry, we could not get your selection."); }
     if (buyChoice == 1) {
-      pat.additem(buyShop[0]);
+      inventory.add(buyShop.get(0));
       pat.removeGems(buyPrice);
+      nextitemId += 1;
     }
     else if (buyChoice == 2) {
-      pat.additem(buyShop[1]);
+      inventory.add(buyShop.get(1));
       pat.removeGems(buyPrice);
+      nextitemId += 1;
      }
     else if (buyChoice == 3) {
-      pat.additem(buyShop[2]);
+      inventory.add(buyShop.get(2));
       pat.removeGems(buyPrice);
+      nextitemId += 1;
     }
     else if (buyChoice == 4) {
       return;
@@ -381,39 +386,49 @@ public class Woo {
 
   // selling interface
   public void sellInterface() {
-    String s, a, b, c, d, f, g, h = "";
+    String s = "";
     int sellChoice = 0;
+    int sellPrice = 0;
+    if (days < 10) {
+      sellPrice = 20;
+    }
+    else if (days < 20) {
+      sellPrice = 40;
+    }
+    else if (days < 30) {
+      sellPrice = 60;
+    }
     s = "\nAnything that will help you on your journey?";
-    a = "\t1: " + displayInventoryItem(0) + "\n"; // fill in, list item in inventory
-    b = "\t2: " + displayInventoryItem(1) + "\n"; // fill in, list item in inventory
-    c = "\t3: " + displayInventoryItem(2) + "\n"; // fill in, list item in inventory
-    d = "\t4: " + displayInventoryItem(3) + "\n"; // fill in, list item in inventory
-    f = "\t5: Exit Shop \n";
-    g = "\t6: Back\n";
-    h = "Selection: \n";
-    System.out.print( s + a + b + c + d + f + g + h);
+    s += "\t1: " + displayInventoryItem(1) + "\tSell Price: " + (sellPrice * inventory.get(1).getDurability()) + "\n";
+    s += "\t2: " + displayInventoryItem(2) + "\tSell Price: " + (sellPrice * inventory.get(2).getDurability()) + "\n";
+    s += "\t3: " + displayInventoryItem(3) + "\tSell Price: " + (sellPrice * inventory.get(2).getDurability()) + "\n";
+    s += "\t4: " + displayInventoryItem(4) + "\tSell Price: " + (sellPrice * inventory.get(2).getDurability()) + "\n";
+    s += "\t5: Exit Shop \n";
+    s += "\t6: Back\n";
+    s += "Selection: \n";
+    System.out.print( s );
     try {
       sellChoice = Integer.parseInt( in.readLine() );
     }
     catch (IOException e) { }
     if (sellChoice == 1) {
-      pat.removeItem(0);
-      int price = Integer.parseInt(a.substring(a.length() - 2, a.length()));
+      inventory.remove(1);
+      int price = sellPrice * inventory.get(1).getDurability();
       pat.addGems(price);
     }
     else if (sellChoice == 2) {
-      pat.removeItem(1);
-      int price = Integer.parseInt(b.substring(b.length() - 2, b.length()));
+      inventory.remove(2);
+      int price = sellPrice * inventory.get(2).getDurability();
       pat.addGems(price);
     }
     else if (sellChoice == 3) {
-      pat.removeItem(2);
-      int price = Integer.parseInt(c.substring(c.length() - 2, c.length()));
+      inventory.remove(3);
+      int price = sellPrice * inventory.get(3).getDurability();
       pat.addGems(price);
     }
     else if (sellChoice == 4) {
-      pat.removeItem(3);
-      int price = Integer.parseInt(d.substring(d.length() - 2, d.length()));
+      inventory.remove(4);
+      int price = sellPrice * inventory.get(4).getDurability();
       pat.addGems(price);
     }
     else if (sellChoice == 5) {

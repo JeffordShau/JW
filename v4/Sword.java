@@ -11,7 +11,7 @@ public class Sword extends Item {
     }
 
     public Sword (String name, int itemId, String itemDescription, int durability, int power) {
-        super(name, id, description, durability, power);
+        super(name, itemId, itemDescription, durability, power);
     }
 
     public int use () {
