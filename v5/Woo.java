@@ -26,6 +26,7 @@ public class Woo {
   private ArrayList<Item> buyShop = new ArrayList<Item>();
   private ArrayList<Item> inventory = new ArrayList<Item>();
   private ArrayList<Integer> issaSword = new ArrayList<Integer>();
+    private ArrayList<Integer> issaPotion = new ArrayList<Integer>();
 
   // default constructor
   public Woo() {
@@ -314,8 +315,8 @@ public class Woo {
       }
       catch ( IOException e ) { }
       int itemChoice = 1;
-      int weaponCount = 3;
       if ( i == 1 ) {
+        int weaponCount = 3;
         String s = "\nWhich weapon will you use?\n";
         s += "\t1: Back\n";
         s += "\t2: Fist\tPower: 1\n";
@@ -338,13 +339,34 @@ public class Woo {
         else if (itemChoice == 2) {
           attack(0);
         }
-        else if (itemChoice > 2 && itemChoice < 6) {
+        else if (itemChoice > 2 && itemChoice < 7) {
           attack(inventory.get(issaSword.get(itemChoice - 3)).getPower()); // deal damage
-          // useItem(inventory.get(issaSword.get(itemChoice - 3)); // reduce durability
+          useItem(issaSword.get(itemChoice - 3)); // reduce durability
         }
       }
       else if ( i == 2 ) {
-
+        int itemCount = 2;
+        String s = "\nWhich item will you use?\n";
+        s += "\t1: Back\n";
+        for (int j = 1; j <= inventory.size(); j++) {
+          if (inventory.get(j) instanceof Potion) {
+            issaPotion.add(j); // adds inventory index
+            s += "\t" + itemCount + ": " + displayInventoryItem(j) + "\n";
+            itemCount += 1;
+          }
+        }
+        s += "Selection: ";
+        System.out.print( s );
+        try {
+          itemChoice = Integer.parseInt( in.readLine() );
+        }
+        catch (IOException e) { }
+        if (itemChoice == 1) {
+          return;
+        }
+        else if (itemChoice > 2 && itemChoice < 6) {
+          useItem(issaPotion.get(itemChoice - 2)); // reduce durability
+        }
       }
       else if ( i == 3 ) {
         int fleeChance = (int) (Math.random() * 2);
@@ -360,6 +382,24 @@ public class Woo {
         }
       }
     }
+  }
+
+  // use item from inventory
+  public void useItem(int index) {
+    if (inventory.get(index) instanceof Sword || inventory.get(index) instanceof Shield) {
+      int reducedDur = ((int) (Math.random() * 5)) * ((int) (Math.random() * 5));
+      inventory.get(index).reduceDurability(reducedDur);
+    }
+    else if (inventory.get(index) instanceof Potion) {
+      if (inventory.get(index).getName() == "Potion of Healing") {
+        pat.setHealth(20);
+        inventory.remove(index);
+      }
+    }
+    if (inventory.get(index).getDurability() <= 0) {
+      inventory.remove(index);
+    }
+    return;
   }
 
   public void attack(int itemPower) {

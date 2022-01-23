@@ -25,7 +25,11 @@ public class Protagonist extends Character {
     gems += removeGems;
   }
 
-  public String getName () {
+  public String getName() {
     return name;
+  }
+
+  public void setHealth(int fullHealth) {
+    health = fullHealth; 
   }
 }
