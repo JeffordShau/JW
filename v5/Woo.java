@@ -18,6 +18,7 @@ public class Woo {
   // Instance variables
   private Protagonist pat;
   private Monster smaug;
+  private Monster finalBoss
 
   private InputStreamReader isr;
   private BufferedReader in;
@@ -166,7 +167,7 @@ public class Woo {
       }
       // final boss
       else if (days == maxDays) {
-        // fight final boss
+        finalBoss();
       }
       // shop
       else if (days % 7 == 0) {
@@ -199,7 +200,7 @@ public class Woo {
   public int ranGems() {
     int randGems = 0;
     if (days < 10) {
-      randGems = (int) (Math.random() * 10);
+      randGems = 2 * ((int) (Math.random() * 5));
     }
     else if (days < 20) {
       randGems = (int) (days / 4) * (int) (Math.random() * 10);
@@ -319,7 +320,7 @@ public class Woo {
         smaug = new Slug("Giant Slug", 4, 6, 0);
       }
     }
-    System.out.println( "You spot a " + smaug.getName() + " ahead. \nHealth: " + smaug.getHealth() + "\tAttack: " + smaug.getAttack() + "\tDefense: " + smaug.getDefense() );
+    System.out.println( "\nYou spot a " + smaug.getName() + " ahead. \nHealth: " + smaug.getHealth() + "\tAttack: " + smaug.getAttack() + "\tDefense: " + smaug.getDefense() );
     battleChoice();
   }
 
@@ -346,11 +347,11 @@ public class Woo {
       else if ( i == 3 ) {
         int fleeChance = (int) (Math.random() * 2);
         if (fleeChance == 0) {
-          System.out.println("The " + smaug.getName() + " swings down on you, but you quickly dodge to the side. You escape in time before the " + smaug.getName() + "can land another hit.");
+          System.out.println("\nThe " + smaug.getName() + " swings down on you, but you quickly dodge to the side. You escape in time before the " + smaug.getName() + "can land another hit.");
           return;
         }
         else {
-          System.out.println("You begin to escape, but the " + smaug.getName() + " slashes down at you one time and lands a hit before you escape.");
+          System.out.println("\nYou begin to escape, but the " + smaug.getName() + " slashes down at you one time and lands a hit before you escape.");
           characterAttack(smaug, pat, 1, 0, useShield());
           return;
         }
@@ -358,7 +359,7 @@ public class Woo {
     }
     if (pat.isAlive()) {
       int randGems = ranGems();
-      System.out.println("You defeated the " + smaug.getName() + " and received " + randGems + " gems!");
+      System.out.println("\nYou defeated the " + smaug.getName() + " and received " + randGems + " gems!");
       pat.addGems(randGems);
     }
   }
@@ -431,30 +432,30 @@ public class Woo {
         issaShield.add(idx);
       }
     }
-      if (issaShield.size() > 0) {
-        int itemCount = 1;
-        int itemChoice = 1;
-        s = "\nWhich shield will you use?\n";
-        for (int j = 0; j < inventory.size(); j++) {
-          if (inventory.get(j) instanceof Shield) {
-            s += "\t" + itemCount + ": " + displayInventoryItem(j) + "\n";
-            itemCount += 1;
+    if (issaShield.size() > 0) {
+      int itemCount = 1;
+      int itemChoice = 1;
+      s = "\nWhich shield will you use?\n";
+      for (int j = 0; j < inventory.size(); j++) {
+        if (inventory.get(j) instanceof Shield) {
+          s += "\t" + itemCount + ": " + displayInventoryItem(j) + "\n";
+          itemCount += 1;
           }
-        }
-        s += "Selection: ";
-        System.out.println( s );
-        try {
-          itemChoice = Integer.parseInt( in.readLine() );
-        }
-        catch (IOException e) { }
-        if (itemChoice > 0 && itemChoice < 5) {
-          int shieldPower = inventory.get(issaShield.get(itemChoice - 1)).getPower();
-          useItem(issaShield.get(itemChoice - 1)); // reduce durability
-          return shieldPower;
-        }
-        return 0;
+      }
+      s += "Selection: ";
+      System.out.println( s );
+      try {
+        itemChoice = Integer.parseInt( in.readLine() );
+      }
+      catch (IOException e) { }
+      if (itemChoice > 0 && itemChoice < 5) {
+        int shieldPower = inventory.get(issaShield.get(itemChoice - 1)).getPower();
+        useItem(issaShield.get(itemChoice - 1)); // reduce durability
+        return shieldPower;
       }
       return 0;
+    }
+    return 0;
   }
 
   // use item from inventory
@@ -471,8 +472,8 @@ public class Woo {
       }
     }
     if (inventory.get(index).getDurability() <= 0) {
+      System.out.println("Your " + inventory.get(index).getName() + "has broke!");
       inventory.remove(index);
-      System.out.println("Your " + inventory.get(index) + "has broke!");
     }
     return;
   }
@@ -660,6 +661,12 @@ public class Woo {
     else if (sellChoice == 6) {
       shop();
     }
+  }
+
+  public void finalBoss() {
+    finalBoss = new Armored_Titan("Armored Titan", 40, 5, 2);
+    System.out.println( "\nYou spot the final boss, " + smaug.getName() + " ahead. \nHealth: " + smaug.getHealth() + "\tAttack: " + smaug.getAttack() + "\tDefense: " + smaug.getDefense() );
+    battleChoice();
   }
 
   public static void main( String[] args ) {
