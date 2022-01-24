@@ -22,7 +22,7 @@ public class Protagonist extends Character {
   }
 
   public void removeGems(int removeGems) {
-    gems += removeGems;
+    gems -= removeGems;
   }
 
   public String getName() {
@@ -30,6 +30,6 @@ public class Protagonist extends Character {
   }
 
   public void setHealth(int fullHealth) {
-    health = fullHealth; 
+    health = fullHealth;
   }
 }

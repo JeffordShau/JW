@@ -9,24 +9,28 @@ Text-Based RPG
 ------------------------------------------
 OBSTACLES OVERCOME
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-wow we so BOSS bc...
+* Coding a "Back" option to display shop interface from sell and buy interfaces.
+* Coding a drop item method used when you find an item and your inventory is full.
+* Coding a combat system that uses items, such as swords, shields, and potions, and reduces their durabilities for each use.
 
 UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-blah blah pesky bug...
-maybe some of these will move into the Obs.Ovrcm section...
+* How can we organize / clean the terminal after every interaction / game event?
+* How to use packages to organize subclasses into folders?
 
 COOL STUFF LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-wow! oo!...
+* Can type a message inside the catch block of the try and catch blocks.
 
 MID-DEVELOPMENT DESIGN CHANGES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-we changed ___ to ___ bc...
+* Changed the items, buyShop, inventory arrays to arrayLists because making them mutable was best for its purpose in our project. For instance, adding items to the inventory. The arrayList methods also seemed easier to use.
+* Removed packages (.xtra) because the subclasses were not compiling.
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-tales of wisdom gained...
+* Grow code incrementally and never stray far from compilable code. Spend most of class time compiling code.
+* Find a team willing to work. 
 ||||||||||||||||||||||||||||||||||||||||||
 
 
@@ -43,43 +47,56 @@ tales of wisdom gained...
 
 2022-01-13
 --------------------------------------------------------------
-Jefford Shau :: Created repo, Drafted proposal
-William Vongphanith :: Developed project idea
+* Created the repo and filled out the google form.
+* Started to draft out our proposal while coming up with project ideas.
+* The project idea of a text-based RPG was brought up.
 ==============================================================
 
 2022-01-14
 --------------------------------------------------------------
-Jefford Shau :: Added to proposal
-William Vongphanith :: Added to proposal
+* Continued adding our project ideas to a google doc.
+* Continued writing and adding to the project proposal.
 ==============================================================
 
 2022-01-16
 --------------------------------------------------------------
-Jefford Shau :: Edited and finalized the proposal
+* Edited and finalized the proposal in class.
+* Started coding the simplest version of the Woo.java file.
+* Woo.java was not compilable at this point.
 ==============================================================
 
 2022-01-18
 --------------------------------------------------------------
-Jefford Shau :: Added characters files, Woo.java compilable,
-updated .gitinore with "value-added" version
-William Vongphanith :: Added item files
+* Started adding the character files into the v0 folder.
+* Finished compiling Woo.java in class.
+* Updated .gitinore file with "value-added" version.
+* Started to develop the simplest version of the item files.
 ==============================================================
 
 2022-01-19
 --------------------------------------------------------------
-Jefford Shau :: Updated README
-William Vongphanith :: Added packages
+* Updated README file to add TNPG, roster, project description, and how to launch information.
+* Experimented with (.xtra) java packages to organize the subclasses into folders in class.
+* Continued adding to the Woo.java file to implement shop interface, sell interface, buy interface, and combat system.
+* Woo.java was not compiliable after adding the methods.
+* Developed UML diagram
+* Added a flowchart that describes the flow of the RPG through conditionals.
 ==============================================================
 
-2022-01-19
+2022-01-20
 --------------------------------------------------------------
-Jefford Shau :: Updated devlog.txt and flowchart
-William Vongphanith :: Fixed compile errors
+* Updated the flowchart to expand the battle system.
+* Finished compiling Woo.java in class.
 ==============================================================
 
-2022-01-22
+2022-01-23
 --------------------------------------------------------------
-Jefford Shau :: Added sell interface and buy interface
+* Continued adding to the Woo.java file to implement the starting items, all items in general, and all monsters.
+* Added additional monster subclasses.
+* Implemented using shields in the combat system to block monster attacks.
+* Implemented using potions during the day and using weapons to fight monsters.
+* Edited the system print information to make the terminal cleaner.
+* Implemented the method to call the final boss.
+* Added the issaSword, issaPotion, and issaShield arrayLists to separate items of different subclasses. This was essential when calling the different types of items to use in specific cases, such as calling shield when shielding, calling sword when attacking, and calling potion when healing.
+* Finalized the rest of the project by running it multiple times to remove running errors that occurred later in the code, such as OutOfBounds Errors.
 ==============================================================
-
-WILL EDIT THIS AND MAKE IT MORE DETAILED WHEN CODING DONE

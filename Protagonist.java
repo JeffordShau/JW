@@ -1,29 +1,35 @@
-import v1.characters.Character;
+// package characters;
 
 public class Protagonist extends Character {
+  public int gems;
 
   public Protagonist() {
     super();
+    gems = 0;
   }
 
-  public Protagonist(String name) {
-    super(name);
+  public Protagonist(String newName, int newHealth, int newBaseDamage, int newDefense) {
+    super(newName, newHealth, newBaseDamage, newDefense);
+    gems = 0;
   }
 
-  public void getGems(int randGems) {
-    gems += randGems;
+  public int getGems() {
+    return gems;
   }
 
-
-  public void getHeal() {
-    health += 5;
+  public void addGems(int addGems) {
+    gems += addGems;
   }
 
-  public String getRole () {
-    return "v1.v1.characters.Protagonist";
+  public void removeGems(int removeGems) {
+    gems -= removeGems;
   }
 
-  public String getName () {
+  public String getName() {
     return name;
+  }
+
+  public void setHealth(int fullHealth) {
+    health = fullHealth;
   }
 }

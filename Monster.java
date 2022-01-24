@@ -1,19 +1,16 @@
-import v1.characters.Character;
+// package characters;
 
 public class Monster extends Character {
-  public int baseDamage;
-  public int damageMult;
-  public int defense;
 
   public Monster() {
     super();
-    health = 300;
-    baseDamage = 30;
-    damageMult = 1;
-    defense = 10;
+  }
+
+  public Monster(String newName, int newHealth, int newBaseDamage, int newDefense) {
+    super(newName, newHealth, newBaseDamage, newDefense);
   }
 
   public String getRole () {
-    return "v1.monsters.Monster";
+    return "Monster";
   }
 }

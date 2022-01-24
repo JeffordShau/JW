@@ -18,7 +18,7 @@ public class Woo {
   // Instance variables
   private Protagonist pat;
   private Monster smaug;
-  private Monster finalBoss
+  private Monster finalBoss;
 
   private InputStreamReader isr;
   private BufferedReader in;
@@ -101,9 +101,9 @@ public class Woo {
       inventory.add(bracelet_of_life);
       nextitemId += 1;
     }
-    Item rusty_dagger = new Sword("Rusty Dagger", nextitemId, "A really reusty dagger", 50, 1);
+    Item rusty_dagger = new Sword("Rusty Dagger", nextitemId, "A really reusty dagger", 50, 2);
     nextitemId += 1;
-    Item flimsy_shield = new Shield("Flimsy Shield", nextitemId, "A terrible shield", 20, 1);
+    Item flimsy_shield = new Shield("Flimsy Shield", nextitemId, "A terrible shield", 20, 2);
     inventory.add(rusty_dagger);
     inventory.add(flimsy_shield);
   } // end newGame
@@ -115,7 +115,7 @@ public class Woo {
       // daily bracelet of life effect
       if (inventory.get(0).getName() == "Bracelet of Life") {
         if (pat.getHealth() < 20) {
-          System.out.println("Your Bracelet of Life healed you for 1 hp!");
+          System.out.println("\nYour Bracelet of Life healed you for 1 hp!");
           pat.addHealth(1);
         }
       }
@@ -136,24 +136,10 @@ public class Woo {
         }
         // receives a random item
         else if (stageSel < 10) {
-          int randDur = 2 * ((int) (Math.random() * 51));
-          int randItem = (int) (Math.random() * 3);
-          Item luckyItem = createItem("", 0, "", "", 0, 0);
-          if (randItem == 0) {
-            luckyItem = createItem("Rusty Dagger", nextitemId, "sword", "", randDur, 3);
-          }
-          else if (randItem == 1) {
-            luckyItem = createItem("Wooden Shield", nextitemId, "shield", "", randDur, 1);
-          }
-          else if (randItem == 2) {
-            luckyItem = createItem("Potion of Healing", nextitemId, "potion", "", randDur, 1);
-          }
-          else if (randItem == 3) {
-            luckyItem = createItem("Potion of Strength", nextitemId, "potion", "", randDur, 1);
-          }
-          System.out.println("You found a " + luckyItem.getName() + "!");
+          Item luckyItem = randItem();
+          System.out.println("\nYou found a " + luckyItem.getName() + "!\tDurability: " + luckyItem.getDurability() + "\tPower: " + luckyItem.getPower() );
           // if inventory full
-          if (inventory.size() > 5) {
+          if (inventory.size() > 4) {
             if (dropInventoryItem()) {
               inventory.add(luckyItem);
               nextitemId += 1;
@@ -311,16 +297,61 @@ public class Woo {
         smaug = new Rat("Big Rat", 4, 4, 0);
       }
       else if (monsterChoice == 1) {
-        smaug = new Blob("Blob", 6, 3, 0);
+        smaug = new Crow("Crow", 4, 4, 0);
       }
       else if (monsterChoice == 2) {
-        smaug = new Crow("Crow", 6, 4, 0);
+        smaug = new Slug("Giant Slug", 4, 5, 0);
       }
       else if (monsterChoice == 3) {
-        smaug = new Slug("Giant Slug", 4, 6, 0);
+        smaug = new Goblin("Goblin", 6, 4, 0);
       }
     }
-    System.out.println( "\nYou spot a " + smaug.getName() + " ahead. \nHealth: " + smaug.getHealth() + "\tAttack: " + smaug.getAttack() + "\tDefense: " + smaug.getDefense() );
+    else if (days < 20) {
+      int monsterChoice = (int) (Math.random() * 8);
+      if (monsterChoice == 0) {
+        smaug = new Wyvern("Wyvern", 6, 6, 1);
+      }
+      else if (monsterChoice == 2) {
+        smaug = new Orge("Orge", 9, 5, 1);
+      }
+      else if (monsterChoice == 3) {
+        smaug = new Demon("Demon", 11, 6, 0);
+      }
+      else if (monsterChoice == 4) {
+        smaug = new Harpy("Harpy", 7, 7, 0);
+      }
+      else if (monsterChoice == 5) {
+        smaug = new Basilisk("Basilisk", 6, 6, 2);
+      }
+      else if (monsterChoice == 6) {
+        smaug = new Chimera("Chimera", 6, 7, 0);
+      }
+      else if (monsterChoice == 7) {
+        smaug = new Griffin("Griffin", 8, 6, 1);
+      }
+    }
+    else if (days < 30) {
+      int monsterChoice = (int) (Math.random() * 6);
+      if (monsterChoice == 0) {
+        smaug = new Salamander("Salamander", 8, 4, 3);
+      }
+      else if (monsterChoice == 1) {
+        smaug = new Dragon("Dragon", 6, 5, 4);
+      }
+      else if (monsterChoice == 2) {
+        smaug = new Sphinx("Sphinx", 9, 6, 0);
+      }
+      else if (monsterChoice == 3) {
+        smaug = new Cyclops("Cyclops", 12, 8, 0);
+      }
+      else if (monsterChoice == 4) {
+        smaug = new Kobold("Kobold", 8, 10, 0);
+      }
+      else if (monsterChoice == 5) {
+        smaug = new Minotaur("Minotaur", 6, 8, 2);
+      }
+    }
+    System.out.println( "\nYou spot a " + smaug.getName() + " ahead. \n" + smaug.getName() + "\tHealth: " + smaug.getHealth() + "\tAttack: " + smaug.getAttack() + "\tDefense: " + smaug.getDefense() );
     battleChoice();
   }
 
@@ -419,7 +450,13 @@ public class Woo {
       return false;
     }
     else if (itemChoice > 2 && itemChoice < 6) {
-      useItem(issaPotion.get(itemChoice - 2)); // reduce durability
+      if (inventory.get(issaPotion.get(itemChoice - 2)) instanceof Potion) {
+        if (inventory.get(issaPotion.get(itemChoice - 2)).getName() == "Potion of Healing") {
+          pat.setHealth(20);
+          inventory.remove(issaPotion.get(itemChoice - 2));
+          System.out.println("You used a potion of healing and now you are at max health!");
+        }
+      }
     }
     return true;
   }
@@ -461,15 +498,8 @@ public class Woo {
   // use item from inventory
   public void useItem(int index) {
     if (inventory.get(index) instanceof Sword || inventory.get(index) instanceof Shield) {
-      int reducedDur = 5 * ((int) (Math.random() * 4));
+      int reducedDur = 5 * ((int) (Math.random() * 6));
       inventory.get(index).reduceDurability(reducedDur);
-    }
-    else if (inventory.get(index) instanceof Potion) {
-      if (inventory.get(index).getName() == "Potion of Healing") {
-        pat.setHealth(20);
-        inventory.remove(index);
-        System.out.println("You used a potion of healing and now you are at max health!");
-      }
     }
     if (inventory.get(index).getDurability() <= 0) {
       System.out.println("Your " + inventory.get(index).getName() + "has broke!");
@@ -485,9 +515,9 @@ public class Woo {
     // bracelet of stealth effects
     if ((inventory.get(0).getName() == "Bracelet of Strength") && (days % 4 == 0)) {
       damageMulti = 2;
+      System.out.println("Your Bracelet of Strength flashes!");
     }
     if (inventory.get(0).getName() == "Bracelet of Stealth") {
-      int shieldPower = useShield();
       characterAttack(pat, smaug, damageMulti, itemPower, 0);
       if (smaug.isAlive()) {
         characterAttack(smaug, pat, damageMulti, itemPower, useShield());
@@ -507,7 +537,7 @@ public class Woo {
     }
     else {
       characterAttack(pat, smaug, damageMulti, itemPower, 0);
-      if (pat.isAlive()){
+      if (smaug.isAlive()){
         characterAttack(smaug, pat, damageMulti, itemPower, useShield());
       }
       else {
@@ -519,6 +549,9 @@ public class Woo {
   public int characterAttack(Character attacker, Character attacked, int damageMulti, int itemPower, int shieldPower) {
     int totalDamage = (attacker.getAttack() + itemPower) * damageMulti;
     int damage = totalDamage - attacked.getDefense() - shieldPower;
+    if (damage < 0) {
+      damage = 0;
+    }
     attacked.subtractHealth(damage);
     System.out.println( "\n" + attacker.getName() + " dealt " + damage + " damage.");
     System.out.println(attacked.getName() + "\tHealth: " + attacked.getHealth() + "\tAttack: " + attacked.getAttack() + "\tDefense: " + attacked.getDefense() );
@@ -549,8 +582,78 @@ public class Woo {
     }
   }
 
+  public Item randItem() {
+    Item luckyItem = createItem("", nextitemId, "", "", 0, 0);
+    int randDur = 2 * ((int) (Math.random() * 51));
+    if (days < 10) {
+      int randItem = (int) (Math.random() * 6);
+      if (randItem == 0) {
+        luckyItem = createItem("Rusty Dagger", nextitemId, "sword", "", randDur, 2);
+      }
+      else if (randItem == 1) {
+        luckyItem = createItem("Wooden Shield", nextitemId, "shield", "", randDur, 1);
+      }
+      else if (randItem == 2) {
+        luckyItem = createItem("Potion of Healing", nextitemId, "potion", "", randDur, 0);
+      }
+      else if (randItem == 3) {
+        luckyItem = createItem("Pitchfork", nextitemId, "sword", "", randDur, 3);
+      }
+      else if (randItem == 4) {
+        luckyItem = createItem("Pickaxe", nextitemId, "sword", "", randDur, 1);
+      }
+      else if (randItem == 5) {
+        luckyItem = createItem("Cardboard", nextitemId, "shield", "", randDur, 0);
+      }
+    }
+    else if (days < 20) {
+      int randItem = (int) (Math.random() * 6);
+      if (randItem == 0) {
+        luckyItem = createItem("Goblin Club", nextitemId, "sword", "", randDur, 5);
+      }
+      else if (randItem == 1) {
+        luckyItem = createItem("Leather Shield", nextitemId, "shield", "", randDur, 2);
+      }
+      else if (randItem == 2) {
+        luckyItem = createItem("Potion of Healing", nextitemId, "potion", "", randDur, 1);
+      }
+      else if (randItem == 3) {
+        luckyItem = createItem("Katana", nextitemId, "sword", "", randDur, 3);
+      }
+      else if (randItem == 4) {
+        luckyItem = createItem("Cutlass", nextitemId, "sword", "", randDur, 4);
+      }
+      else if (randItem == 5) {
+        luckyItem = createItem("Stone Shield", nextitemId, "sword", "", randDur, 3);
+      }
+    }
+    else if (days < 30) {
+      int randItem = (int) (Math.random() * 6);
+      if (randItem == 0) {
+        luckyItem = createItem("Excalibur", nextitemId, "sword", "", randDur, 6);
+      }
+      else if (randItem == 1) {
+        luckyItem = createItem("Diamond Shield", nextitemId, "shield", "", randDur, 6);
+      }
+      else if (randItem == 2) {
+        luckyItem = createItem("Potion of Healing", nextitemId, "potion", "", randDur, 1);
+      }
+      else if (randItem == 3) {
+        luckyItem = createItem("Long Sword", nextitemId, "sword", "", randDur, 5);
+      }
+      else if (randItem == 4) {
+        luckyItem = createItem("Round Shield", nextitemId, "shield", "", randDur, 5);
+      }
+      else if (randItem == 5) {
+        luckyItem = createItem("Stone Shield", nextitemId, "sword", "", randDur, 3);
+      }
+    }
+    return luckyItem;
+  }
+
   // buying interface
   public void buyInterface() {
+
     String s;
     int buyChoice = 0;
     int buyPrice = 0;
@@ -564,18 +667,13 @@ public class Woo {
     else if (days < 30) {
       buyPrice = 90;
     }
+    if (pat.getGems() < buyPrice) {
+      System.out.println("Sorry, you do not have enough gems!");
+      shop();
+    }
     buyShop.clear();
     for (int i = 0; i < 3; i++) {
-      Item shopItem = createItem("", 0, "", "", 0, 0);
-      if (randBuyItems == 0) {
-        shopItem = createItem("Rusty Dagger", nextitemId, "sword", "", 100, 3);
-      }
-      else if (randBuyItems == 1) {
-        shopItem = createItem("Wooden Shield", nextitemId, "shield", "", 100, 1);
-      }
-      else if (randBuyItems == 2) {
-        shopItem = createItem("Potion of Health", nextitemId, "potion", "", 100, 1);
-      }
+      Item shopItem = randItem();
       buyShop.add(shopItem);
     }
     s = "\nAnything that will help you on your journey?\n";
@@ -626,6 +724,7 @@ public class Woo {
   // selling interface
   public void sellInterface() {
     String s = "";
+    int counter = 1;
     int sellChoice = 0;
     int sellPrice = 0;
     if (days < 10) {
@@ -637,34 +736,37 @@ public class Woo {
     else if (days < 30) {
       sellPrice = 60;
     }
-    s = "\nAnything that will help you on your journey?\n";
-    s += "\t1: " + displayInventoryItem(1) + "\tSell Price: " + (sellPrice * inventory.get(1).getDurability()) + "\n";
-    s += "\t2: " + displayInventoryItem(2) + "\tSell Price: " + (sellPrice * inventory.get(2).getDurability()) + "\n";
-    s += "\t3: " + displayInventoryItem(3) + "\tSell Price: " + (sellPrice * inventory.get(2).getDurability()) + "\n";
-    s += "\t4: " + displayInventoryItem(4) + "\tSell Price: " + (sellPrice * inventory.get(2).getDurability()) + "\n";
-    s += "\t5: Exit Shop \n";
-    s += "\t6: Back\n";
+    s = "\nWhat would you like to sell??\n";
+    s += "\t" + counter + ": Exit Shop \n";
+    counter += 1;
+    s += "\t" + counter + ": Back \n";
+    counter += 1;
+    for (int i = 1; i < inventory.size() - 1; i++) {
+      s += "\t" + counter + ": " + displayInventoryItem(i) + "\tSell Price: " + (int) (sellPrice * (0.01 * inventory.get(i).getDurability())) + "\n";
+      counter += 1;
+    }
     s += "Selection: \n";
     System.out.print( s );
     try {
       sellChoice = Integer.parseInt( in.readLine() );
     }
     catch (IOException e) { }
-    if (sellChoice < 5) {
-      inventory.remove(sellChoice);
-      int price = sellPrice * inventory.get(sellChoice).getDurability();
-      pat.addGems(price);
-    }
-    else if (sellChoice == 5) {
+    if (sellChoice == 1) {
       return;
     }
-    else if (sellChoice == 6) {
+    else if (sellChoice == 2) {
       shop();
+    }
+    else if (sellChoice < 7) {
+      int price = (int) (sellPrice * (0.01 * inventory.get(sellChoice - 2).getDurability()));
+      System.out.println("You sold your " + inventory.get(sellChoice - 2).getName() + " for " + price + " gems!");
+      inventory.remove(sellChoice - 2);
+      pat.addGems(price);
     }
   }
 
   public void finalBoss() {
-    finalBoss = new Armored_Titan("Armored Titan", 40, 5, 2);
+    finalBoss = new Armored_Titan("Armored Titan", 36, 8, 2);
     System.out.println( "\nYou spot the final boss, " + smaug.getName() + " ahead. \nHealth: " + smaug.getHealth() + "\tAttack: " + smaug.getAttack() + "\tDefense: " + smaug.getDefense() );
     battleChoice();
   }
