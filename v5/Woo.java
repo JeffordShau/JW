@@ -26,7 +26,8 @@ public class Woo {
   private ArrayList<Item> buyShop = new ArrayList<Item>();
   private ArrayList<Item> inventory = new ArrayList<Item>();
   private ArrayList<Integer> issaSword = new ArrayList<Integer>();
-    private ArrayList<Integer> issaPotion = new ArrayList<Integer>();
+  private ArrayList<Integer> issaPotion = new ArrayList<Integer>();
+  private ArrayList<Integer> issaShield = new ArrayList<Integer>();
 
   // default constructor
   public Woo() {
@@ -99,6 +100,11 @@ public class Woo {
       inventory.add(bracelet_of_life);
       nextitemId += 1;
     }
+    Item rusty_dagger = new Sword("Rusty Dagger", nextitemId, "A really reusty dagger", 50, 1);
+    nextitemId += 1;
+    Item flimsy_shield = new Shield("Flimsy Shield", nextitemId, "A terrible shield", 20, 1);
+    inventory.add(rusty_dagger);
+    inventory.add(flimsy_shield);
   } // end newGame
 
   // one turn/stage
@@ -112,50 +118,19 @@ public class Woo {
           pat.addHealth(1);
         }
       }
-      System.out.println("Day " + days + "\tHealth: " + pat.getHealth() + "\tAttack: " + pat.getAttack() + "\tDefense: " + pat.getDefense() + "\tGems: " + pat.getGems());
+      System.out.println("\nDay " + days + "\tHealth: " + pat.getHealth() + "\tAttack: " + pat.getAttack() + "\tDefense: " + pat.getDefense() + "\tGems: " + pat.getGems());
       // randomly assigns the stage depending on day number
       if (days % 7 != 0 && days != maxDays) {
         int stageSel = (int) (Math.random() * 10);
         // receives a random amount of gems, has a choice on next action
-        if (stageSel < 2) {
-          int randGems = 0;
-          if (days < 10) {
-            randGems = (int) (Math.random() * 10);
-          }
-          else if (days < 20) {
-            randGems = (int) (days / 4) * (int) (Math.random() * 10);
-          }
-          else if (days < 30) {
-            randGems = (int) (days / 4) * (int) (Math.random() * 10);
-          }
-          System.out.println("You looked around and found " + randGems + " gems!");
+        if (stageSel < 3) {
+          int randGems = ranGems();
+          System.out.println("\nYou looked around and found " + randGems + " gems!");
           pat.addGems(randGems);
-          pat.getGems();
-          s = "You do not spot any monsters today. What would you like to do?\n";
-          s += "\t1: Search for monsters\n";
-          s += "\t2: Use Item\n";
-          s += "\t3: Sleep\n";
-          s += "Selection: ";
-          int turnChoice = 0;
-          System.out.println(s);
-          try {
-            turnChoice = Integer.parseInt(in.readLine());
-          }
-          catch ( IOException e ) { }
-          if (turnChoice == 1) {
-            battleMonster();
-          } else if (turnChoice == 2) {
-            useItem();
-          } else if (turnChoice == 3) {
-            System.out.println("You decide to take a nap.");
-            return true;
-          } else {
-            System.out.println("We could not identify your action. You went to sleep for the night.");
-            return true;
-          }
+          free();
         }
         // fights a monster
-        else if (stageSel < 8) {
+        else if (stageSel < 7) {
           battleMonster();
         }
         // receives a random item
@@ -164,16 +139,16 @@ public class Woo {
           int randItem = (int) (Math.random() * 3);
           Item luckyItem = createItem("", 0, "", "", 0, 0);
           if (randItem == 0) {
-            luckyItem = createItem("Rusty Dagger", nextitemId, "sword", "", 100, 3);
+            luckyItem = createItem("Rusty Dagger", nextitemId, "sword", "", randDur, 3);
           }
           else if (randItem == 1) {
-            luckyItem = createItem("Wooden Shield", nextitemId, "shield", "", 100, 1);
+            luckyItem = createItem("Wooden Shield", nextitemId, "shield", "", randDur, 1);
           }
           else if (randItem == 2) {
-            luckyItem = createItem("Potion of Health", nextitemId, "potion", "", 100, 1);
+            luckyItem = createItem("Potion of Healing", nextitemId, "potion", "", randDur, 1);
           }
           else if (randItem == 3) {
-            luckyItem = createItem("Potion of Strength", nextitemId, "potion", "", 100, 1);
+            luckyItem = createItem("Potion of Strength", nextitemId, "potion", "", randDur, 1);
           }
           System.out.println("You found a " + luckyItem.getName() + "!");
           // if inventory full
@@ -218,6 +193,50 @@ public class Woo {
     // player dead
     else {
       return false;
+    }
+  }
+
+  public int ranGems() {
+    int randGems = 0;
+    if (days < 10) {
+      randGems = (int) (Math.random() * 10);
+    }
+    else if (days < 20) {
+      randGems = (int) (days / 4) * (int) (Math.random() * 10);
+    }
+    else if (days < 30) {
+      randGems = (int) (days / 4) * (int) (Math.random() * 10);
+    }
+    return randGems;
+  }
+
+  public void free () {
+    String s = "\nYou do not spot any monsters today. What would you like to do?\n";
+    s += "\t1: Search for monsters\n";
+    s += "\t2: Use Item\n";
+    s += "\t3: Sleep\n";
+    s += "Selection: ";
+    int turnChoice = 0;
+    System.out.println(s);
+    try {
+      turnChoice = Integer.parseInt(in.readLine());
+    }
+    catch ( IOException e ) { }
+    if (turnChoice == 1) {
+      battleMonster();
+    }
+    else if (turnChoice == 2) {
+      if (!(useItem())){
+        System.out.println("\nYou decide not to use any items and go to sleep.");
+      }
+    }
+    else if (turnChoice == 3) {
+      System.out.println("\nYou decide to take a nap.");
+      return;
+    }
+    else {
+      System.out.println("\nWe could not identify your action. You went to sleep for the night.");
+      return;
     }
   }
 
@@ -284,11 +303,7 @@ public class Woo {
     return newitem;
   }
 
-  public void useItem() {
-  }
-
   public void battleMonster() {
-    int i = 1;
     if (days < 10) {
       int monsterChoice = (int) (Math.random() * 4);
       if (monsterChoice == 0) {
@@ -304,9 +319,12 @@ public class Woo {
         smaug = new Slug("Giant Slug", 4, 6, 0);
       }
     }
-    System.out.println( "You are fighting a " + smaug.getName() + "\nHealth: " + smaug.getHealth() + "\tAttack: " + smaug.getAttack() + "\tDefense: " + smaug.getDefense() );
+    System.out.println( "You spot a " + smaug.getName() + " ahead. \nHealth: " + smaug.getHealth() + "\tAttack: " + smaug.getAttack() + "\tDefense: " + smaug.getDefense() );
+    battleChoice();
+  }
 
-    // fighting with turns
+  public void battleChoice() {
+    int i = 1;
     while( smaug.isAlive() && pat.isAlive() ) {
       System.out.println( "\nWhat is your choice?" );
       System.out.println( "\t1: Attack\n\t2: Use Item\n\t3: Flee\nSelection: " );
@@ -314,58 +332,15 @@ public class Woo {
         i = Integer.parseInt( in.readLine() );
       }
       catch ( IOException e ) { }
-      int itemChoice = 1;
       if ( i == 1 ) {
-        int weaponCount = 3;
-        String s = "\nWhich weapon will you use?\n";
-        s += "\t1: Back\n";
-        s += "\t2: Fist\tPower: 1\n";
-        for (int j = 1; j <= inventory.size(); j++) {
-          if (inventory.get(j) instanceof Sword) {
-            issaSword.add(j); // adds inventory index
-            s += "\t" + weaponCount + ": " + displayInventoryItem(j) + "\n";
-            weaponCount += 1;
-          }
-        }
-        s += "Selection: ";
-        System.out.print( s );
-        try {
-          itemChoice = Integer.parseInt( in.readLine() );
-        }
-        catch (IOException e) { }
-        if (itemChoice == 1) {
-          return;
-        }
-        else if (itemChoice == 2) {
-          attack(0);
-        }
-        else if (itemChoice > 2 && itemChoice < 7) {
-          attack(inventory.get(issaSword.get(itemChoice - 3)).getPower()); // deal damage
-          useItem(issaSword.get(itemChoice - 3)); // reduce durability
-        }
+        weapon();
       }
       else if ( i == 2 ) {
-        int itemCount = 2;
-        String s = "\nWhich item will you use?\n";
-        s += "\t1: Back\n";
-        for (int j = 1; j <= inventory.size(); j++) {
-          if (inventory.get(j) instanceof Potion) {
-            issaPotion.add(j); // adds inventory index
-            s += "\t" + itemCount + ": " + displayInventoryItem(j) + "\n";
-            itemCount += 1;
-          }
+        if (!(useItem())) {
+          battleChoice();
         }
-        s += "Selection: ";
-        System.out.print( s );
-        try {
-          itemChoice = Integer.parseInt( in.readLine() );
-        }
-        catch (IOException e) { }
-        if (itemChoice == 1) {
-          return;
-        }
-        else if (itemChoice > 2 && itemChoice < 6) {
-          useItem(issaPotion.get(itemChoice - 2)); // reduce durability
+        else {
+        characterAttack(smaug, pat, 1, 0, useShield()); // no attack weapon
         }
       }
       else if ( i == 3 ) {
@@ -376,32 +351,133 @@ public class Woo {
         }
         else {
           System.out.println("You begin to escape, but the " + smaug.getName() + " slashes down at you one time and lands a hit before you escape.");
-          System.out.println( "The " + smaug.getName() + "smacked " + pat.getName() + " for " + characterAttack(smaug, pat, 1, 0) + " damage.");
-          System.out.println(pat.getName() + " health: " + pat.getHealth());
+          characterAttack(smaug, pat, 1, 0, useShield());
           return;
         }
       }
     }
+    if (pat.isAlive()) {
+      int randGems = ranGems();
+      System.out.println("You defeated the " + smaug.getName() + " and received " + randGems + " gems!");
+      pat.addGems(randGems);
+    }
+  }
+
+  public void weapon() {
+    int itemChoice = 1;
+    int weaponCount = 3;
+    String s = "\nWhich weapon will you use?\n";
+    s += "\t1: Back\n";
+    s += "\t2: Fist\tPower: 1\n";
+    issaSword.clear();
+    for (int j = 0; j < inventory.size(); j++) {
+      if (inventory.get(j) instanceof Sword) {
+        issaSword.add(j); // adds inventory index
+        s += "\t" + weaponCount + ": " + displayInventoryItem(j) + "\n";
+        weaponCount += 1;
+      }
+    }
+    s += "Selection: ";
+    System.out.print( s );
+    try {
+      itemChoice = Integer.parseInt( in.readLine() );
+    }
+    catch (IOException e) { }
+    if (itemChoice == 1) {
+      return;
+    }
+    else if (itemChoice == 2) {
+      attack(0);
+    }
+    else if (itemChoice > 2 && itemChoice < 7) {
+      attack(inventory.get(issaSword.get(itemChoice - 3)).getPower()); // deal damage
+      useItem(issaSword.get(itemChoice - 3)); // reduce durability
+    }
+  }
+
+  public boolean useItem() {
+    int itemChoice = 1;
+    int itemCount = 2;
+    String s = "\nWhich item will you use?\n";
+    s += "\t1: Back\n";
+    issaPotion.clear();
+    for (int j = 0; j < inventory.size(); j++) {
+      if (inventory.get(j) instanceof Potion) {
+        issaPotion.add(j); // adds inventory index
+        s += "\t" + itemCount + ": " + displayInventoryItem(j) + "\n";
+        itemCount += 1;
+      }
+    }
+    s += "Selection: ";
+    System.out.print( s );
+    try {
+      itemChoice = Integer.parseInt( in.readLine() );
+    }
+    catch (IOException e) { }
+    if (itemChoice == 1) {
+      return false;
+    }
+    else if (itemChoice > 2 && itemChoice < 6) {
+      useItem(issaPotion.get(itemChoice - 2)); // reduce durability
+    }
+    return true;
+  }
+
+  public int useShield() {
+    String s;
+    issaShield.clear();
+    for(int idx = 0; idx < inventory.size(); idx++) {
+      if (inventory.get(idx) instanceof Shield) {
+        issaShield.add(idx);
+      }
+    }
+      if (issaShield.size() > 0) {
+        int itemCount = 1;
+        int itemChoice = 1;
+        s = "\nWhich shield will you use?\n";
+        for (int j = 0; j < inventory.size(); j++) {
+          if (inventory.get(j) instanceof Shield) {
+            s += "\t" + itemCount + ": " + displayInventoryItem(j) + "\n";
+            itemCount += 1;
+          }
+        }
+        s += "Selection: ";
+        System.out.println( s );
+        try {
+          itemChoice = Integer.parseInt( in.readLine() );
+        }
+        catch (IOException e) { }
+        if (itemChoice > 0 && itemChoice < 5) {
+          int shieldPower = inventory.get(issaShield.get(itemChoice - 1)).getPower();
+          useItem(issaShield.get(itemChoice - 1)); // reduce durability
+          return shieldPower;
+        }
+        return 0;
+      }
+      return 0;
   }
 
   // use item from inventory
   public void useItem(int index) {
     if (inventory.get(index) instanceof Sword || inventory.get(index) instanceof Shield) {
-      int reducedDur = ((int) (Math.random() * 5)) * ((int) (Math.random() * 5));
+      int reducedDur = 5 * ((int) (Math.random() * 4));
       inventory.get(index).reduceDurability(reducedDur);
     }
     else if (inventory.get(index) instanceof Potion) {
       if (inventory.get(index).getName() == "Potion of Healing") {
         pat.setHealth(20);
         inventory.remove(index);
+        System.out.println("You used a potion of healing and now you are at max health!");
       }
     }
     if (inventory.get(index).getDurability() <= 0) {
       inventory.remove(index);
+      System.out.println("Your " + inventory.get(index) + "has broke!");
     }
     return;
   }
 
+  // deals with the attack order
   public void attack(int itemPower) {
     int damageMulti = 1;
     int attackOrder = (int) (Math.random() * 7);
@@ -410,22 +486,38 @@ public class Woo {
       damageMulti = 2;
     }
     if (inventory.get(0).getName() == "Bracelet of Stealth") {
-      characterAttack(pat, smaug, damageMulti, itemPower);
-      characterAttack(smaug, pat, damageMulti, itemPower);
+      int shieldPower = useShield();
+      characterAttack(pat, smaug, damageMulti, itemPower, 0);
+      if (smaug.isAlive()) {
+        characterAttack(smaug, pat, damageMulti, itemPower, useShield());
+      }
+      else {
+        return;
+      }
     }
     else if (attackOrder < 3) {
-      characterAttack(smaug, pat, damageMulti, itemPower);
-      characterAttack(pat, smaug, damageMulti, itemPower);
+      characterAttack(smaug, pat, damageMulti, itemPower, useShield());
+      if (pat.isAlive()){
+        characterAttack(pat, smaug, damageMulti, itemPower, 0);
+      }
+      else {
+        return;
+      }
     }
     else {
-      characterAttack(pat, smaug, damageMulti, itemPower);
-      characterAttack(smaug, pat, damageMulti, itemPower);
+      characterAttack(pat, smaug, damageMulti, itemPower, 0);
+      if (pat.isAlive()){
+        characterAttack(smaug, pat, damageMulti, itemPower, useShield());
+      }
+      else {
+        return;
+      }
     }
   }
 
-  public int characterAttack(Character attacker, Character attacked, int damageMulti, int itemPower) {
+  public int characterAttack(Character attacker, Character attacked, int damageMulti, int itemPower, int shieldPower) {
     int totalDamage = (attacker.getAttack() + itemPower) * damageMulti;
-    int damage = totalDamage - attacked.getDefense();
+    int damage = totalDamage - attacked.getDefense() - shieldPower;
     attacked.subtractHealth(damage);
     System.out.println( "\n" + attacker.getName() + " dealt " + damage + " damage.");
     System.out.println(attacked.getName() + "\tHealth: " + attacked.getHealth() + "\tAttack: " + attacked.getAttack() + "\tDefense: " + attacked.getDefense() );
@@ -485,7 +577,7 @@ public class Woo {
       }
       buyShop.add(shopItem);
     }
-    s = "\nAnything that will help you on your journey?";
+    s = "\nAnything that will help you on your journey?\n";
     s += "\t1: " + displayBuyItem(0) + "\tBuy Price: "+ buyPrice + "\n";
     s += "\t2: " + displayBuyItem(1) + "\tBuy Price: "+ buyPrice + "\n";
     s += "\t3: " + displayBuyItem(2) + "\tBuy Price: "+ buyPrice + "\n";
@@ -582,7 +674,7 @@ public class Woo {
       System.out.println("Congrats Hero! Your arduous journey is now over.");
     }
     else {
-      System.out.println("You have died.");
+      System.out.println("You have died.\nBetter luck next time.");
     }
   }
 }
